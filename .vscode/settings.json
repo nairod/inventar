@@ -1,3 +1,15 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib"
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "editor.fontSize": 16,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "app/*.js": true,
+    "app/*.map": true
+  },
+  "workbench.editor.showIcons": true,
+  "beautify.onSave": ["js", "html", "css"],
+  "editor.formatOnSave": true
 }

@@ -1,0 +1,9 @@
+<h3 highlight>Artikel</h3>
+<div *ngIf="artikel">
+  <div>Id: {{artikel.id}}</div><br>
+  <label>Name:
+        <input [(ngModel)]="artikel.name">
+      </label>
+</div>
+<br>
+<a routerLink="../">Inventarliste</a>

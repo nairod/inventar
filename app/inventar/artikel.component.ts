@@ -7,17 +7,7 @@ import {
 } from './inventar.service';
 
 @Component({
-  template: `
-    <h3 highlight>Artikel</h3>
-    <div *ngIf="artikel">
-      <div>Id: {{artikel.id}}</div><br>
-      <label>Name:
-        <input [(ngModel)]="artikel.name">
-      </label>
-    </div>
-    <br>
-    <a routerLink="../">Inventarliste</a>
-  `
+  templateUrl: './app/inventar/artikel.component.html'
 })
 
 export class ArtikelComponent implements OnInit {

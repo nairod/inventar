@@ -1,0 +1,4 @@
+<h3 highlight>Inventarliste</h3>
+<div *ngFor='let artikel of inventarliste | async'>
+  <a routerLink="{{artikel._id}}">{{artikel.imagePath}} - {{artikel.name}}</a>
+</div>

@@ -7,7 +7,8 @@ import {
 } from './inventar.service';
 
 @Component({
-  templateUrl: './app/inventar/artikel.component.html'
+  templateUrl: './app/inventar/artikel.component.html',
+  styleUrls: ['./app/inventar/artikel.component.css']
 })
 
 export class ArtikelComponent implements OnInit {
@@ -18,8 +19,17 @@ export class ArtikelComponent implements OnInit {
     private inventarService: InventarService) { }
 
   ngOnInit() {
-    let id = parseInt(this.route.snapshot.params['id'], 10);
-    this.inventarService.getArtikel(id).then(artikel => this.artikel = artikel);
+    this.next();
+  }
+
+  next() {
+    this.artikel = this.inventarService.next();
+    return this.artikel;
+  }
+
+  previous() {
+    this.artikel = this.inventarService.previous();
+    return this.artikel;
   }
 }
 

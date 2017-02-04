@@ -1,9 +1,16 @@
 <h3 highlight>Artikel</h3>
-<div *ngIf="artikel">
-  <div>Id: {{artikel.id}}</div><br>
-  <label>Name:
-        <input [(ngModel)]="artikel.name">
-      </label>
-</div>
+<form *ngIf="artikel" (ngSubmit)="onSubmit()" #artikelForm="ngForm">
+  <div class="form-group">
+    <div>Id: {{artikel.id}}</div><br>
+    <label for="name">Name</label>
+    <input type="text" class="form-control" required [(ngModel)]=artikel.name name="name" #name="ngModel">
+    <div [hidden]="name.valid" class="alert alert-danger">
+      Name is required
+    </div>
+  </div>
+  <br>
+  <button type="button" class="btn" (click)="previous()" [disabled]="!artikelForm.form.valid">Vorheriger Artikel</button>
+  <button type="button" class="btn" (click)="next()" [disabled]="!artikelForm.form.valid">Nächster Artikel</button>
+</form>
 <br>
 <a routerLink="../">Inventarliste</a>

@@ -14,16 +14,17 @@ db.ensureIndex({
 
 global.datastore = db;
 
-const photos_on_disk = fs.readdirSync(__dirname + '/datastore/photos');
+const photoFolder = __dirname + '/datastore/photos/';
+const photos_on_disk = fs.readdirSync(photoFolder);
 
 photos_on_disk.forEach(photo => {
 
   db.insert({
     name: '',
     kategorie: '',
-    ep: 0,
-    vp: 0,
-    imagePath: photo
+    einstandpreis: 0,
+    verkaufspreis: 0,
+    imagePath: '../electron/datastore/photos/' + photo
   });
   console.log('load: ' + photo)
 });

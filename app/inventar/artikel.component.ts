@@ -13,12 +13,23 @@ import {
 
 export class ArtikelComponent implements OnInit {
   artikel: Artikel;
+  kategorien: string[];
+
+  submitted = false;
+  onSubmit() {
+    this.submitted = true;
+    this.inventarService.update(this.artikel);
+  }
+
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.artikel); }
 
   constructor(
     private route: ActivatedRoute,
     private inventarService: InventarService) { }
 
   ngOnInit() {
+    this.kategorien = this.inventarService.kategorien;
     this.next();
   }
 

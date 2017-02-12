@@ -1,5 +1,5 @@
 import { ResultFunc } from 'rxjs/observable/GenerateObservable';
-import { Injectable } from '@angular/core';
+import { Injectable, ValueProvider } from '@angular/core';
 import * as Datastore from 'nedb';
 
 let remote = require('electron').remote;
@@ -7,20 +7,13 @@ let remote = require('electron').remote;
 
 export class Artikel {
   constructor(
+    public _id: string,
     public name: string,
     public kategorie: string,
-    public ep: number,
-    public vp: number,
+    public einstandpreis: number,
+    public verkaufspreis: number,
     public imagePath: string) { }
 }
-
-const INVENTARLISTE: Artikel[] = [
-  new Artikel('Bernstein Ring', 'Ringe', 123.35, 230, 'bild.jpg'),
-  new Artikel('Bernstein Ring2', 'Ringe', 124.35, 230, 'bild.jpg'),
-  new Artikel('Bernstein Ring3', 'Ringe', 125.35, 230, 'bild.jpg'),
-  new Artikel('Bernstein Ring4', 'Ringe', 126.35, 230, 'bild.jpg')
-];
-
 
 
 @Injectable()
@@ -29,6 +22,8 @@ export class InventarService {
   private currentArtikel: Artikel;
   private inventarliste: Array<Artikel>;
 
+  private _kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
+
   constructor() {
     this.inventarDB = remote.getGlobal('datastore');
 
@@ -36,6 +31,9 @@ export class InventarService {
     ).then(inventarliste => this.currentArtikel = inventarliste[0]);
   }
 
+  get kategorien(): string[] {
+    return this._kategorien;
+  }
 
   public getInventarliste(): Promise<Array<Artikel>> {
     return new Promise((resolve, reject) => {
@@ -75,5 +73,23 @@ export class InventarService {
     if (ix <= 0) { ix = this.inventarliste.length; }
     this.currentArtikel = this.inventarliste[ix];
     return this.currentArtikel;
+  }
+
+  public update(artikel: Artikel) {
+    this.inventarDB.update({ _id: artikel._id },
+      {
+        $set: {
+          name: artikel.name,
+          kategorie: artikel.kategorie,
+          einstandpreis: artikel.einstandpreis,
+          verkaufspreis: artikel.verkaufspreis
+        }
+      },
+      {
+        multi: true
+      },
+      function (err, numReplaced) {
+      });
+
   }
 }

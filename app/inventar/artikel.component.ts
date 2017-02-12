@@ -12,12 +12,10 @@ import {
 })
 
 export class ArtikelComponent implements OnInit {
-  artikel: Artikel;
+  artikel: Artikel = {} as Artikel;
   kategorien: string[];
 
-  submitted = false;
   onSubmit() {
-    this.submitted = true;
     this.inventarService.update(this.artikel);
   }
 
@@ -26,20 +24,22 @@ export class ArtikelComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private inventarService: InventarService) { }
+    private inventarService: InventarService) {
+    let id: string = this.route.snapshot.params['id'];
+    this.inventarService.getArtikel(id).then(artikel => this.artikel = artikel);
+  }
 
   ngOnInit() {
     this.kategorien = this.inventarService.kategorien;
-    this.next();
   }
 
   next() {
-    this.artikel = this.inventarService.next();
+    this.artikel = this.inventarService.nextFor(this.artikel);
     return this.artikel;
   }
 
   previous() {
-    this.artikel = this.inventarService.previous();
+    this.artikel = this.inventarService.previousFor(this.artikel);
     return this.artikel;
   }
 }

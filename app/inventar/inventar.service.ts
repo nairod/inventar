@@ -19,16 +19,14 @@ export class Artikel {
 @Injectable()
 export class InventarService {
   private inventarDB: Datastore;
-  private currentArtikel: Artikel;
   private inventarliste: Array<Artikel>;
 
   private _kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
 
   constructor() {
     this.inventarDB = remote.getGlobal('datastore');
-
-    this.getInventarliste().then(inventarliste => this.inventarliste = inventarliste
-    ).then(inventarliste => this.currentArtikel = inventarliste[0]);
+    this.getInventarliste()
+      .then(inventarliste => this.inventarliste = inventarliste);
   }
 
   get kategorien(): string[] {
@@ -49,7 +47,7 @@ export class InventarService {
 
   public getArtikel(id: number | string): Promise<Artikel> {
     return new Promise((resolve, reject) => {
-      return this.inventarDB.findOne({ id: id }, ((err: Error, artikel: Artikel) => {
+      return this.inventarDB.findOne({ _id: id }, ((err: Error, artikel: Artikel) => {
         if (err) {
           reject(err);
         } else {
@@ -61,18 +59,24 @@ export class InventarService {
   }
 
 
-  public next() {
-    let ix = this.inventarliste.indexOf(this.currentArtikel) + 1;
-    if (ix >= this.inventarliste.length) { ix = 0; }
-    this.currentArtikel = this.inventarliste[ix];
-    return this.currentArtikel;
+  public nextFor(artikel: Artikel) {
+    let ix = this.inventarliste.findIndex(arti => arti._id === artikel._id);
+    if (ix === (this.inventarliste.length - 1)) {
+      ix = 0;
+    } else {
+      ix++;
+    }
+    return this.inventarliste[ix];
   }
 
-  public previous() {
-    let ix = this.inventarliste.indexOf(this.currentArtikel) - 1;
-    if (ix <= 0) { ix = this.inventarliste.length; }
-    this.currentArtikel = this.inventarliste[ix];
-    return this.currentArtikel;
+  public previousFor(artikel: Artikel) {
+    let ix = this.inventarliste.findIndex(arti => arti._id === artikel._id);
+    if (ix === 0) {
+      ix = (this.inventarliste.length - 1);
+    } else {
+      ix--;
+    }
+    return this.inventarliste[ix];
   }
 
   public update(artikel: Artikel) {
@@ -88,8 +92,12 @@ export class InventarService {
       {
         multi: true
       },
-      function (err, numReplaced) {
+      (err: Error, numReplaced: number) => {
+        if (err) {
+          // TODO: handle error
+        } else {
+          console.log('updated', artikel.name);
+        }
       });
-
   }
 }

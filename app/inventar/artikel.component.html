@@ -26,26 +26,12 @@
         <label for="verkaufspreis">Verkaufspreis</label>
         <input type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis" name="verkaufspreis" #verkaufspreis="ngModel">
       </div>
+      <div>
+        {{artikel.imagePath}} {{diagnostic}}
+      </div>
       <button type="submit" class="btn btn-success" [disabled]="!artikelForm.form.valid">Speichern</button>
-      <button (click)="previous()" class="btn">Zurück</button>
-      <button (click)="next()" class="btn">Vorwärts</button>
+      <button type="button" (click)="previous()" class="btn">Zurück</button>
+      <button type="button" (click)="next()" class="btn">Vorwärts</button>
     </form>
-  </div>
-  <div [hidden]="!submitted">
-    <h2>You submitted the following:</h2>
-    <div class="row">
-      <div class="col-xs-3">Name</div>
-      <div class="col-xs-9  pull-left">{{ artikel.name }}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-3">Kategorie</div>
-      <div class="col-xs-9 pull-left">{{ artikel.kategorie }}</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-3">Einstandpreis</div>
-      <div class="col-xs-9 pull-left">{{ artikel.einstandspreis }}</div>
-    </div>
-    <br> {{diagnostic}}
-    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
   </div>
 </div>

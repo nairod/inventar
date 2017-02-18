@@ -10,4 +10,8 @@
       <a routerLink="{{artikel._id}}">{{artikel.imagePath}} - {{artikel.name}}</a>
     </div>
   </div>
+  <div>
+    <ngx-datatable [rows]="rows" [columns]="columns">
+    </ngx-datatable>
+  </div>
 </div>

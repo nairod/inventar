@@ -1,5 +1,38 @@
-h2 { color: #444; font-weight: lighter; }
-body { margin: 2em; }
-body, input[text], button { color: #888; font-family: Cambria, Georgia; }
-button { padding: 0.2em; font-size: 14px}
-* { font-family: Arial; }
+h2 {
+  color: #444;
+  font-weight: lighter;
+}
+
+body,
+input[text],
+button {
+  color: #888;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  padding: 0.2em;
+  font-size: 14px
+}
+
+* {
+  font-family: Arial;
+}
+
+.app-style {
+  background-color: #444;
+}
+
+.inventarliste-zeile {
+  border-radius: 0.3em;
+  margin: 0.5em;
+  padding: 1em;
+}
+
+.inventarliste-bild {
+  border-radius: 0.3em;
+}
+
+.container {
+  background-color: #444;
+}

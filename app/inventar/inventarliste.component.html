@@ -1,4 +1,13 @@
-<div *ngFor='let artikel of inventarliste | async'>
-  <img src="{{artikel.imagePath}}" width="200px">
-  <a routerLink="{{artikel._id}}">{{artikel.imagePath}} - {{artikel.name}}</a>
+<div class="container-fluid">
+  <div class="row jumbotron" *ngFor='let artikel of inventarliste | async'>
+    <div class="col-md-4">
+      <a routerLink="{{artikel._id}}">
+        <img class="img-responsive inventarliste-bild" width="100%" src="{{artikel.imagePath}}">
+      </a>
+    </div>
+    <div class="col-md-8">
+      <h5>{{artikel.name}}</h5>
+      <a routerLink="{{artikel._id}}">{{artikel.imagePath}} - {{artikel.name}}</a>
+    </div>
+  </div>
 </div>

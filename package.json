@@ -27,6 +27,7 @@
     "@angular/router": "~3.4.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "angular-in-memory-web-api": "~0.2.2",
+    "angular2-datatable": "^0.5.3",
     "core-js": "^2.4.1",
     "nedb": "^1.8.0",
     "reflect-metadata": "^0.1.8",

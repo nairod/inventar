@@ -7,6 +7,7 @@ import { ArtikelComponent } from './artikel.component';
 import { InventarlisteComponent } from './inventarliste.component';
 import { InventarRoutingModule } from './inventar-routing.module';
 
+
 @NgModule({
   imports: [SharedModule, InventarRoutingModule],
   declarations: [

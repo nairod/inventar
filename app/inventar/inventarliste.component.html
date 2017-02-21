@@ -1,17 +1,37 @@
 <div class="container-fluid">
-  <div class="row jumbotron" *ngFor='let artikel of inventarliste | async'>
-    <div class="col-md-4">
-      <a routerLink="{{artikel._id}}">
-        <img class="img-responsive inventarliste-bild" width="100%" src="{{artikel.imagePath}}">
-      </a>
-    </div>
-    <div class="col-md-8">
-      <h5>{{artikel.name}}</h5>
-      <a routerLink="{{artikel._id}}">{{artikel.imagePath}} - {{artikel.name}}</a>
-    </div>
-  </div>
   <div>
-    <ngx-datatable [rows]="rows" [columns]="columns">
+    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'force'">
+      <ngx-datatable-column name="name">
+        <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <div>
+            <a routerLink="{{row['_id']}}">
+              <h2>{{row['name']}}</h2>
+              <img class="img-responsive inventarliste-bild" width="100%" src="{{row['imagePath']}}">
+            </a>
+          </div>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="kategorie">
+        <template let-value="value" ngx-datatable-cell-template>
+          <div class="col-md-2">
+            <p>{{value}}</p>
+          </div>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="einstandspreis">
+        <template let-value="value" ngx-datatable-cell-template>
+          <div class="col-md-2">
+            <p>{{value}}</p>
+          </div>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="verkaufspreis">
+        <template let-value="value" ngx-datatable-cell-template>
+          <div class="col-md-2">
+            <p>{{value}}</p>
+          </div>
+        </template>
+      </ngx-datatable-column>
     </ngx-datatable>
   </div>
 </div>

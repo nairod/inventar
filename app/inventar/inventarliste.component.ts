@@ -1,5 +1,5 @@
+import { runInThisContext } from 'vm';
 import { Component, OnInit } from '@angular/core';
-
 
 
 import {
@@ -9,24 +9,25 @@ import {
 
 
 @Component({
-  templateUrl: './app/inventar/inventarliste.component.html'
+  templateUrl: './app/inventar/inventarliste.component.html',
 })
 
 
 export class InventarlisteComponent implements OnInit {
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-  columns = [
+  columns: any = [
+    { name: 'imagePath' },
     { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { name: 'Einstandspreis' },
+    { name: 'Kategorie' },
+    { name: 'Verkaufspreis' }
   ];
 
+  rows: any[] = [];
+
   inventarliste: Promise<Artikel[]>;
-  constructor(private inventarService: InventarService) { }
+  constructor(private inventarService: InventarService) {
+    this.inventarService.getInventarliste().then(liste => this.rows = liste);
+  }
 
 
   ngOnInit() {

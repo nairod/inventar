@@ -15,7 +15,7 @@ import {
 
 export class ArtikelComponent implements OnInit {
   artikel: Artikel = {} as Artikel;
-  Kategorien: string[];
+  kategorien: string[];
 
   onSubmit() {
     this.inventarService.update(this.artikel);
@@ -32,7 +32,7 @@ export class ArtikelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Kategorien = this.inventarService.Kategorien;
+    this.kategorien = this.inventarService.kategorien;
   }
 
   next() {

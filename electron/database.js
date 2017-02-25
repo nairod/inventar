@@ -20,10 +20,10 @@ const photos_on_disk = fs.readdirSync(photoFolder);
 photos_on_disk.forEach(photo => {
 
   db.insert({
-    Name: '',
-    Kategorie: '',
-    einstandpreis: 0,
-    Verkaufspreis: 0,
+    name: '',
+    kategorie: '',
+    einstandspreis: 0,
+    verkaufspreis: 0,
     imagePath: '../electron/datastore/photos/' + photo
   });
   console.log('load: ' + photo)

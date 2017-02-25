@@ -8,10 +8,10 @@ let remote = require('electron').remote;
 export class Artikel {
   constructor(
     public _id: string,
-    public Name: string,
-    public Kategorie: string,
-    public Einstandpreis: number,
-    public Verkaufspreis: number,
+    public name: string,
+    public kategorie: string,
+    public einstandspreis: number,
+    public verkaufspreis: number,
     public imagePath: string) { }
 }
 
@@ -21,7 +21,7 @@ export class InventarService {
   private inventarDB: Datastore;
   private inventarliste: Array<Artikel>;
 
-  private _Kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
+  private _kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
 
   constructor() {
     this.inventarDB = remote.getGlobal('datastore');
@@ -29,8 +29,8 @@ export class InventarService {
       .then(inventarliste => this.inventarliste = inventarliste);
   }
 
-  get Kategorien(): string[] {
-    return this._Kategorien;
+  get kategorien(): string[] {
+    return this._kategorien;
   }
 
   public getInventarliste(): Promise<Array<Artikel>> {
@@ -51,7 +51,7 @@ export class InventarService {
         if (err) {
           reject(err);
         } else {
-          console.log('Got', artikel.Name);
+          console.log('Got', artikel.name);
           resolve(artikel);
         }
       }));
@@ -83,10 +83,10 @@ export class InventarService {
     this.inventarDB.update({ _id: artikel._id },
       {
         $set: {
-          Name: artikel.Name,
-          Kategorie: artikel.Kategorie,
-          Einstandpreis: artikel.Einstandpreis,
-          Verkaufspreis: artikel.Verkaufspreis
+          name: artikel.name,
+          kategorie: artikel.kategorie,
+          einstandspreis: artikel.einstandspreis,
+          verkaufspreis: artikel.verkaufspreis
         }
       },
       {
@@ -96,7 +96,7 @@ export class InventarService {
         if (err) {
           // TODO: handle error
         } else {
-          console.log('updated', artikel.Name);
+          console.log('updated', artikel.name);
         }
       });
   }

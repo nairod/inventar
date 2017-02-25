@@ -1,9 +1,10 @@
-<ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'flex'">
-  <ngx-datatable-column name="Name" [flexGrow]="5">
+<input mdInput placeholder="Suchebegriff eingeben" (keyup)='updateFilter($event)'>
+<ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'force'">
+  <ngx-datatable-column name="name" [flexGrow]="5">
     <template let-row="row" let-value="value" ngx-datatable-cell-template>
       <md-card>
         <md-card-title>
-          {{row['Name']}}
+          {{row['name']}}
         </md-card-title>
         <a routerLink="{{row['_id']}}">
           <img mdCard-image width="100%" src="{{row['imagePath']}}">
@@ -11,25 +12,19 @@
       </md-card>
     </template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Kategorie" [flexGrow]="2">
+  <ngx-datatable-column name="kategorie" [flexGrow]="2">
     <template let-value="value" ngx-datatable-cell-template>
-      <div class="col-md-2">
-        <p>{{value}}</p>
-      </div>
+      <md-card>{{value}}</md-card>
     </template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Einstandspreis" [flexGrow]="1">
+  <ngx-datatable-column name="einstandspreis" [flexGrow]="1">
     <template let-value="value" ngx-datatable-cell-template>
-      <div class="col-md-2">
-        <p>{{value}}</p>
-      </div>
+      <md-card>{{value}}</md-card>
     </template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Verkaufspreis" [flexGrow]="3">
+  <ngx-datatable-column name="verkaufspreis" [flexGrow]="3">
     <template let-value="value" ngx-datatable-cell-template>
-      <div class="col-md-2">
-        <p>{{value}}</p>
-      </div>
+      <md-card>{{value}}</md-card>
     </template>
   </ngx-datatable-column>
 </ngx-datatable>

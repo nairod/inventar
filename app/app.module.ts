@@ -8,13 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    NgxDatatableModule
+    NgxDatatableModule,
+    MaterialModule
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

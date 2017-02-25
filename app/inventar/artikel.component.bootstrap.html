@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row jumbotron">
+    <form class="form-horizontal col-md-6" (ngSubmit)="onSubmit()" #artikelForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Bitte Namen eingeben
+        </div>
+      </div>
+      <md-input-container class="form-group">
+        <input mdInput placeholder="Bezeichnung" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
+      </md-input-container>
+      <md-select placeholder="Kategorie" [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
+        <md-option *ngFor="let kat of kategorien" [value]="kat">
+          {{ kat }}
+        </md-option>
+      </md-select>
+      <div class="form-group">
+        <label for="kategorie">Kategorie</label>
+        <select class="form-control" id="kategorie" required [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
+          <option *ngFor="let kat of kategorien" [value]="kat">{{kat}}</option>
+        </select>
+        <div [hidden]="kategorie.valid || kategorie.pristine" class="alert alert-danger">
+          Bitte Kategegorie eingeben
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="einstandspreis">Einstandspreis</label>
+        <input type="number" class="form-control" id="einstandspreis" [(ngModel)]="artikel.einstandspreis" name="einstandspreis"
+          #einstandspreis="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="verkaufspreis">Verkaufspreis</label>
+        <input type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis" name="verkaufspreis" #verkaufspreis="ngModel">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!artikelForm.form.valid">Speichern</button>
+      <button type="button" (click)="previous()" class="btn">Zurück</button>
+      <button (click)="next()" class="btn">Vorwärts</button>
+    </form>
+    <div class="col-md-6">
+      <img class="img-responsive inventarliste-bild" width="100%" src="{{artikel.imagePath}}">
+    </div>
+  </div>
+</div>

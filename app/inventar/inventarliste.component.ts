@@ -16,7 +16,7 @@ import {
 export class InventarlisteComponent implements OnInit {
   columns: any = [
     { name: 'imagePath' },
-    { prop: 'name' },
+    { prop: 'Name' },
     { name: 'Einstandspreis' },
     { name: 'Kategorie' },
     { name: 'Verkaufspreis' }

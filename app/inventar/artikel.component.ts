@@ -1,5 +1,7 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import {
   Artikel,
@@ -13,7 +15,7 @@ import {
 
 export class ArtikelComponent implements OnInit {
   artikel: Artikel = {} as Artikel;
-  kategorien: string[];
+  Kategorien: string[];
 
   onSubmit() {
     this.inventarService.update(this.artikel);
@@ -30,7 +32,7 @@ export class ArtikelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.kategorien = this.inventarService.kategorien;
+    this.Kategorien = this.inventarService.Kategorien;
   }
 
   next() {

@@ -1,37 +1,35 @@
-<div class="container-fluid">
-  <div>
-    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'force'">
-      <ngx-datatable-column name="name">
-        <template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <div>
-            <a routerLink="{{row['_id']}}">
-              <h2>{{row['name']}}</h2>
-              <img class="img-responsive inventarliste-bild" width="100%" src="{{row['imagePath']}}">
-            </a>
-          </div>
-        </template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="kategorie">
-        <template let-value="value" ngx-datatable-cell-template>
-          <div class="col-md-2">
-            <p>{{value}}</p>
-          </div>
-        </template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="einstandspreis">
-        <template let-value="value" ngx-datatable-cell-template>
-          <div class="col-md-2">
-            <p>{{value}}</p>
-          </div>
-        </template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="verkaufspreis">
-        <template let-value="value" ngx-datatable-cell-template>
-          <div class="col-md-2">
-            <p>{{value}}</p>
-          </div>
-        </template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-  </div>
-</div>
+<ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'flex'">
+  <ngx-datatable-column name="Name" [flexGrow]="5">
+    <template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <md-card>
+        <md-card-title>
+          {{row['Name']}}
+        </md-card-title>
+        <a routerLink="{{row['_id']}}">
+          <img mdCard-image width="100%" src="{{row['imagePath']}}">
+        </a>
+      </md-card>
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Kategorie" [flexGrow]="2">
+    <template let-value="value" ngx-datatable-cell-template>
+      <div class="col-md-2">
+        <p>{{value}}</p>
+      </div>
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Einstandspreis" [flexGrow]="1">
+    <template let-value="value" ngx-datatable-cell-template>
+      <div class="col-md-2">
+        <p>{{value}}</p>
+      </div>
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Verkaufspreis" [flexGrow]="3">
+    <template let-value="value" ngx-datatable-cell-template>
+      <div class="col-md-2">
+        <p>{{value}}</p>
+      </div>
+    </template>
+  </ngx-datatable-column>
+</ngx-datatable>

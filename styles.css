@@ -1,6 +1,7 @@
 @import '/node_modules/@swimlane/ngx-datatable/release/index.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/material.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
+@import '/node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 .inventarliste-zeile {
   border-radius: 0.3em;
   margin: 0.5em;

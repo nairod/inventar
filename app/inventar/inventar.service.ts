@@ -8,10 +8,10 @@ let remote = require('electron').remote;
 export class Artikel {
   constructor(
     public _id: string,
-    public name: string,
-    public kategorie: string,
-    public einstandpreis: number,
-    public verkaufspreis: number,
+    public Name: string,
+    public Kategorie: string,
+    public Einstandpreis: number,
+    public Verkaufspreis: number,
     public imagePath: string) { }
 }
 
@@ -21,7 +21,7 @@ export class InventarService {
   private inventarDB: Datastore;
   private inventarliste: Array<Artikel>;
 
-  private _kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
+  private _Kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
 
   constructor() {
     this.inventarDB = remote.getGlobal('datastore');
@@ -29,8 +29,8 @@ export class InventarService {
       .then(inventarliste => this.inventarliste = inventarliste);
   }
 
-  get kategorien(): string[] {
-    return this._kategorien;
+  get Kategorien(): string[] {
+    return this._Kategorien;
   }
 
   public getInventarliste(): Promise<Array<Artikel>> {
@@ -51,7 +51,7 @@ export class InventarService {
         if (err) {
           reject(err);
         } else {
-          console.log('Got', artikel.name);
+          console.log('Got', artikel.Name);
           resolve(artikel);
         }
       }));
@@ -83,10 +83,10 @@ export class InventarService {
     this.inventarDB.update({ _id: artikel._id },
       {
         $set: {
-          name: artikel.name,
-          kategorie: artikel.kategorie,
-          einstandpreis: artikel.einstandpreis,
-          verkaufspreis: artikel.verkaufspreis
+          Name: artikel.Name,
+          Kategorie: artikel.Kategorie,
+          Einstandpreis: artikel.Einstandpreis,
+          Verkaufspreis: artikel.Verkaufspreis
         }
       },
       {
@@ -96,7 +96,7 @@ export class InventarService {
         if (err) {
           // TODO: handle error
         } else {
-          console.log('updated', artikel.name);
+          console.log('updated', artikel.Name);
         }
       });
   }

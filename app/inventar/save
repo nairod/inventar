@@ -1,0 +1,19 @@
+          <md-card>
+            <md-grid-list cols="2" rowHeigth="fit">
+              <md-grid-tile>
+                <md-list>
+                  <md-list-item>
+                    <p>{{row['name']}}</p>
+                  </md-list-item>
+                  <md-list-item>
+                    <p>{{row['kategorie']}}</p>
+                  </md-list-item>
+                </md-list>
+              </md-grid-tile>
+              <md-grid-tile>
+                <a routerLink="{{row['_id']}}">
+                  <img mdCard-image width="100%" src="{{row['imagePath']}}">
+                </a>
+              </md-grid-tile>
+            </md-grid-list>
+          </md-card>

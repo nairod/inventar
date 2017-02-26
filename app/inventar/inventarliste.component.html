@@ -1,30 +1,37 @@
-<input mdInput placeholder="Suchebegriff eingeben" (keyup)='updateFilter($event)'>
-<ngx-datatable class="material" [rows]="rows" [columns]="columns" [rowHeight]="'auto'" [columnMode]="'force'">
-  <ngx-datatable-column name="name" [flexGrow]="5">
-    <template let-row="row" let-value="value" ngx-datatable-cell-template>
-      <md-card>
-        <md-card-title>
-          {{row['name']}}
-        </md-card-title>
-        <a routerLink="{{row['_id']}}">
-          <img mdCard-image width="100%" src="{{row['imagePath']}}">
-        </a>
-      </md-card>
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="kategorie" [flexGrow]="2">
-    <template let-value="value" ngx-datatable-cell-template>
-      <md-card>{{value}}</md-card>
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="einstandspreis" [flexGrow]="1">
-    <template let-value="value" ngx-datatable-cell-template>
-      <md-card>{{value}}</md-card>
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="verkaufspreis" [flexGrow]="3">
-    <template let-value="value" ngx-datatable-cell-template>
-      <md-card>{{value}}</md-card>
-    </template>
-  </ngx-datatable-column>
-</ngx-datatable>
+<md-card>
+  <md-card-title>Inventar Glanzvoll</md-card-title>
+  <md-card-content>
+    <md-input-container style="width:100%;">
+      <input mdInput placeholder="Suche nach Namen oder Kategorien" (keyup)='updateFilter($event)'>
+    </md-input-container>
+    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [headerHeight]="50" [rowHeight]="'auto'" [columnMode]="'flex'">
+      <ngx-datatable-column name="Name" [flexGrow]="5">
+        <template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <md-card>
+            <md-card-subtitle>
+              {{row['name']}}
+            </md-card-subtitle>
+            <a routerLink="{{row['_id']}}">
+              <img mdCard-image width="100%" src="{{row['imagePath']}}">
+            </a>
+          </md-card>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Kategorie" [flexGrow]="2">
+        <template let-value="value" ngx-datatable-cell-template>
+          <md-card> {{value}}</md-card>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Einstandspreis" [flexGrow]="2">
+        <template let-value="value" ngx-datatable-cell-template>
+          <md-card>{{value}}</md-card>
+        </template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Verkaufspreis" [flexGrow]="2">
+        <template let-value="value" ngx-datatable-cell-template>
+          <md-card>{{value}}</md-card>
+        </template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </md-card-content>
+</md-card>

@@ -35,8 +35,9 @@
     </md-grid-tile>
   </md-grid-list>
   <md-card-actions>
+    <button md-raised-button (click)="previous()">Letzter</button>
+    <button md-raised-button (click)="next()">Nächster</button>
+    <button md-raised-button [routerLink]="['']">  Übersicht</button>
     <button md-raised-button (click)="onSubmit()" [disabled]="!artikelForm.form.valid">Speichern</button>
-    <button md-raised-button (click)="previous()">Zurück</button>
-    <button md-raised-button (click)="next()">Vorwärts</button>
   </md-card-actions>
 </md-card>

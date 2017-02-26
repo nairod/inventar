@@ -1,8 +1,13 @@
-<div class="container-fluid">
+<!--
+  <div class="container-fluid">
   <div class="row" style="margin-bottom: 80px">
     <nav class="navbar fixed-top navbar-light bg-faded">
-      <a class="col-md-3 btn btn-info" routerLink="" routerLinkActive="active">Inventarliste</a>
+      <button md-button [mdMenuTriggerFor]="menu">Menu</button>
+      <md-menu #menu="mdMenu">
+        <button md-menu-item [routerLink]="['']">Übersicht</button>
+      </md-menu>
     </nav>
   </div>
-  <router-outlet></router-outlet>
 </div>
+!-->
+<router-outlet></router-outlet>

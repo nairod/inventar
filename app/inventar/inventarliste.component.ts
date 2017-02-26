@@ -24,7 +24,7 @@ export class InventarlisteComponent implements OnInit {
 
   rows: any[] = [];
   temp: any[] = [];
-
+  kategorien: string[];
   inventarliste: Promise<Artikel[]>;
   constructor(private inventarService: InventarService) {
     this.inventarService.getInventarliste().then(liste => {
@@ -36,14 +36,15 @@ export class InventarlisteComponent implements OnInit {
 
   ngOnInit() {
     this.inventarliste = this.inventarService.getInventarliste();
+    this.kategorien = this.inventarService.kategorien;
   }
 
   updateFilter(event: any) {
     let val = event.target.value;
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    const temp = this.temp.filter(f => {
+      return !val || f.kategorie.toLowerCase().indexOf(val) !== -1 || f.name.toLowerCase().indexOf(val) !== -1;
     });
 
     // update the rows

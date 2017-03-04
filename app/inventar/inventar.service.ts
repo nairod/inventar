@@ -21,7 +21,9 @@ export class InventarService {
   private inventarDB: Datastore;
   private inventarliste: Array<Artikel>;
 
-  private _kategorien: string[] = ['Eheringe', 'Schmuckringe', 'Halsketten'];
+  private _kategorien: string[] =
+  ['Anhänger', 'Perlenkette', 'Edelsteine ', 'Eheringe', 'Kinderketteli',
+    'Ring', 'Ohrschmuck', 'Collier', 'Armkette'];
 
   constructor() {
     this.inventarDB = remote.getGlobal('datastore');

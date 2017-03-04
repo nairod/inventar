@@ -1,8 +1,9 @@
 import { ResultFunc } from 'rxjs/observable/GenerateObservable';
 import { Injectable, ValueProvider } from '@angular/core';
 import * as Datastore from 'nedb';
+import { ElectronService } from 'ngx-electron';
 
-let remote = require('electron').remote;
+//let remote = require('electron').remote;
 
 
 export class Artikel {
@@ -25,8 +26,11 @@ export class InventarService {
   ['Anhänger', 'Perlenkette', 'Edelsteine ', 'Eheringe', 'Kinderketteli',
     'Ring', 'Ohrschmuck', 'Collier', 'Armkette'];
 
-  constructor() {
-    this.inventarDB = remote.getGlobal('datastore');
+  constructor(private _electronService: ElectronService) {
+    if (ElectronService.runningInElectron) {
+      this.inventarDB = _electronService.remote.getGlobal('datastore');
+    }
+    //this.inventarDB = remote.getGlobal('datastore');
     this.getInventarliste()
       .then(inventarliste => this.inventarliste = inventarliste);
   }

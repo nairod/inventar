@@ -1,12 +1,8 @@
-import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 
-import {
-  Artikel,
-  InventarService
-} from './inventar.service';
+import { Artikel, InventarService } from './inventar.service';
+import { DatabaseService } from './database.service';
 
 @Component({
   templateUrl: './app/inventar/artikel.component.html',
@@ -18,7 +14,7 @@ export class ArtikelComponent implements OnInit {
   kategorien: string[];
 
   onSubmit() {
-    this.inventarService.update(this.artikel);
+    this.dbService.update(this.artikel);
   }
 
   // TODO: Remove this when we're done
@@ -26,9 +22,10 @@ export class ArtikelComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private dbService: DatabaseService,
     private inventarService: InventarService) {
     let id: string = this.route.snapshot.params['id'];
-    this.inventarService.getArtikel(id).then(artikel => this.artikel = artikel);
+    this.dbService.getArtikel(id).then(artikel => this.artikel = artikel);
   }
 
   ngOnInit() {
@@ -36,12 +33,12 @@ export class ArtikelComponent implements OnInit {
   }
 
   next() {
-    this.artikel = this.inventarService.nextFor(this.artikel);
+    this.artikel = this.dbService.nextFor(this.artikel);
     return this.artikel;
   }
 
   previous() {
-    this.artikel = this.inventarService.previousFor(this.artikel);
+    this.artikel = this.dbService.previousFor(this.artikel);
     return this.artikel;
   }
 }

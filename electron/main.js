@@ -1,5 +1,4 @@
 var electron = require('electron');
-require('./database.js');
 // Module to control application life.
 var app = electron.app;
 // Keep a global reference of the window object, if you don't, the window will

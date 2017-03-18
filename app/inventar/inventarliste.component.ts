@@ -1,12 +1,9 @@
-import { runInThisContext } from 'vm';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-
-import {
-  Artikel,
-  InventarService
-} from './inventar.service';
-
+import { Artikel } from './inventar.service';
+import { DatabaseService } from './database.service';
+import { InventarService } from './inventar.service';
 
 @Component({
   templateUrl: './app/inventar/inventarliste.component.html',
@@ -25,19 +22,24 @@ export class InventarlisteComponent implements OnInit {
   rows: any[] = [];
   temp: any[] = [];
   kategorien: string[];
-  inventarliste: Promise<Artikel[]>;
-  constructor(private inventarService: InventarService) {
-    this.inventarService.getInventarliste().then(liste => {
-      this.temp = [...liste];
-      this.rows = liste;
-    });
+  inventarliste: Observable<Artikel[]>;
+
+  constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
+
   }
+
 
 
   ngOnInit() {
-    this.inventarliste = this.inventarService.getInventarliste();
-    this.kategorien = this.inventarService.kategorien;
+    this.kategorien = this._inventarService.kategorien;
+    this.inventarliste = this._dbService.artikelObservable;
+    this._dbService.artikelObservable.subscribe(liste => {
+      this.temp = [...liste];
+      this.rows = liste;
+    });
+
   }
+
 
   updateFilter(event: any) {
     let val = event.target.value;
@@ -49,5 +51,9 @@ export class InventarlisteComponent implements OnInit {
 
     // update the rows
     this.rows = temp;
+  }
+
+  reload() {
+    this._dbService.loadAll();
   }
 }

@@ -5,6 +5,9 @@
       <md-menu #menu="mdMenu">
         <button md-menu-item [routerLink]="['']">Übersicht</button>
         <button md-menu-item (click)="openInventar()">Inventar öffnen</button>
+        <button md-menu-item (click)="loadPhotos()">Bilder laden</button>
+        <button md-menu-item (click)="importDatabase()">Datenbank importieren</button>
+        <button md-menu-item (click)="exportDatabase()">Datenbank exportieren</button>
       </md-menu>
     </nav>
   </div>

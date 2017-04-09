@@ -25,19 +25,57 @@ export class DatabaseService {
 
   }
 
-  openDatabase(folderName: string): void {
+  openDatabase(folderName: string): DatabaseService {
     this.dbPath = folderName;
-    const Datastore = this._electronService.remote.require('nedb'),
-      db = new Datastore({
-        filename: folderName + '/inventar.nedb',
-        autoload: true
-      });
-
+    const db = new Datastore({
+      filename: folderName + '/inventarBig.nedb',
+      autoload: true
+    });
     db.ensureIndex({
       fieldName: 'imagePath',
       unique: true
     });
     this.inventarDB = db;
+    return this;
+  }
+
+  importDatabaseFile(dbFileName: string, legacy: boolean): void {
+    const nativeImage = this._electronService.remote.require('electron').nativeImage;
+    const Datastore = this._electronService.remote.require('nedb'),
+      db: Datastore = new Datastore({
+        filename: dbFileName,
+        autoload: true
+      });
+
+    db.find<Artikel>({}, (e, docs) => {
+      if (!e) {
+        for (let importedArtikel of docs) {
+          // TODO: auslagern da Duplikat in inventarservice, imagepath in imagedataurl umbenennen
+          if (legacy) {
+            let image = nativeImage.createFromPath(importedArtikel.imagePath);
+            let resizedImage = image.resize({ width: 400 });
+            importedArtikel.imagePath = resizedImage.toDataURL();
+          }
+          this.inventarDB.insert(importedArtikel);
+          console.log('inserted artikel: ' + importedArtikel);
+        }
+      }
+    });
+  }
+  exportDatabaseFile(toFileName: string): void {
+    const Datastore = this._electronService.remote.require('nedb'),
+      exportDB: Datastore = new Datastore({
+        filename: toFileName,
+        autoload: true
+      });
+    this.inventarDB.find<Artikel>({}, (e, docs) => {
+      if (!e) {
+        for (let artikel of docs) {
+          exportDB.insert(artikel);
+          console.log('exported artikel: ' + artikel);
+        }
+      }
+    });
   }
 
   loadAll(): void {
@@ -93,6 +131,9 @@ export class DatabaseService {
       });
   }
 
+  public insert(artikel: Artikel) {
+    this.inventarDB.insert<Artikel>(artikel);
+  }
 
   public nextFor(artikel: Artikel) {
     let ix = this.artikelStore.liste.findIndex(arti => arti._id === artikel._id);

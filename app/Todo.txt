@@ -1,8 +1,5 @@
-select folder to load to database or display
-compress images when loading
-limit image display size on overview
 timer on typeahead
-back to overview -> use browser back?
+back to overview -> replay subject
 add entry without image?
 next in category?
 

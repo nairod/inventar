@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxElectronModule } from 'ngx-electron';
 
 /* App Root */
@@ -13,12 +14,13 @@ import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    CommonModule,
     NgbModule.forRoot(),
     NgxDatatableModule,
     MaterialModule,
-    NgxElectronModule
+    NgxElectronModule,
+    BrowserAnimationsModule
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

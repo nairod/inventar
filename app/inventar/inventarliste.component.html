@@ -2,8 +2,14 @@
   <md-card-title>Inventar Glanzvoll</md-card-title>
   <md-card-content>
     <md-input-container style="width:100%;">
-      <input mdInput placeholder="Suche nach Namen oder Kategorien" (keyup)='updateFilter($event)'>
+      <input mdInput placeholder="Suche nach Namen oder Kategorien" [mdAutocomplete]="auto" (blur)='updateFilter($event)'>
     </md-input-container>
+    <md-autocomplete #auto="mdAutocomplete">
+      <md-option *ngFor="let artikel of inventarliste | async" [value]="artikel.name">
+        {{ artikel.name }}
+      </md-option>
+    </md-autocomplete>
+
     <ngx-datatable class="material" [rows]="rows" [columns]="columns" [headerHeight]="50" [rowHeight]="'auto'" [columnMode]="'flex'">
       <ngx-datatable-column name="Name" [flexGrow]="5">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -34,4 +40,7 @@
       </ngx-datatable-column>
     </ngx-datatable>
   </md-card-content>
+  <md-card-actions>
+    <button md-raised-button (click)="reload()">reload</button>
+  </md-card-actions>
 </md-card>

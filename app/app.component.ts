@@ -16,4 +16,15 @@ export class AppComponent {
   public openInventar() {
     this._inventarService.openInventar();
   }
+
+  public loadPhotos() {
+    this._inventarService.loadPhotos();
+  }
+
+  public importDatabase() {
+    this._inventarService.importDatabase();
+  }
+  public exportDatabase() {
+    this._inventarService.exortDatabase();
+  }
 }

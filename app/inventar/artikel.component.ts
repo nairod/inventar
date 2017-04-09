@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Artikel, InventarService } from './inventar.service';
@@ -23,7 +24,8 @@ export class ArtikelComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dbService: DatabaseService,
-    private inventarService: InventarService) {
+    private inventarService: InventarService,
+    private location: Location) {
     let id: string = this.route.snapshot.params['id'];
     this.dbService.getArtikel(id).then(artikel => this.artikel = artikel);
   }
@@ -40,6 +42,9 @@ export class ArtikelComponent implements OnInit {
   previous() {
     this.artikel = this.dbService.previousFor(this.artikel);
     return this.artikel;
+  }
+  back() {
+    this.location.back();
   }
 }
 

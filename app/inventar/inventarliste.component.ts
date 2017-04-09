@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
@@ -28,8 +29,6 @@ export class InventarlisteComponent implements OnInit {
 
   }
 
-
-
   ngOnInit() {
     this.kategorien = this._inventarService.kategorien;
     this.inventarliste = this._dbService.artikelObservable;
@@ -37,13 +36,12 @@ export class InventarlisteComponent implements OnInit {
       this.temp = [...liste];
       this.rows = liste;
     });
-
+    this._dbService.openDatabase('mainDB').loadAll();
   }
 
 
   updateFilter(event: any) {
     let val = event.target.value;
-
     // filter our data
     const temp = this.temp.filter(f => {
       return !val || f.kategorie.toLowerCase().indexOf(val) !== -1 || f.name.toLowerCase().indexOf(val) !== -1;

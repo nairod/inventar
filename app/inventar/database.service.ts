@@ -53,8 +53,12 @@ export class DatabaseService {
           // TODO: auslagern da Duplikat in inventarservice, imagepath in imagedataurl umbenennen
           if (legacy) {
             let image = nativeImage.createFromPath(importedArtikel.imagePath);
-            let resizedImage = image.resize({ width: 400 });
-            importedArtikel.imagePath = resizedImage.toDataURL();
+            if (!image.isEmpty()) {
+              let resizedImage = image.resize({ width: 400 });
+              importedArtikel.imagePath = resizedImage.toDataURL();
+            } else {
+              console.log('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
+            }
           }
           this.inventarDB.insert(importedArtikel);
           console.log('inserted artikel: ' + importedArtikel);
@@ -130,9 +134,28 @@ export class DatabaseService {
         }
       });
   }
+  public delete(id: number | string) {
+    const index = this.artikelStore.liste.findIndex(arti => arti._id === id);
+    if (index > -1) {
+      this.artikelStore.liste.splice(index, 1);
+    }
+    this._artikelSubject.next(this.artikelStore.liste);
+
+    this.inventarDB.remove({ _id: id }, {}, function (err, numRemoved) {
+    });
+  }
 
   public insert(artikel: Artikel) {
     this.inventarDB.insert<Artikel>(artikel);
+  }
+
+  public deleteAll() {
+    this.inventarDB.remove({}, { multi: true }, function (err, numRemoved) {
+      /*this.inventarDB.loadDatabase(function (err1) {
+        // done
+      });*/
+    });
+    this.loadAll();
   }
 
   public nextFor(artikel: Artikel) {

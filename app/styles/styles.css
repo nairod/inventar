@@ -2,5 +2,26 @@
 @import '/node_modules/@swimlane/ngx-datatable/release/themes/material.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
 @import '/node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
+.box {
+  height: 100%;
+  width: 100%;
+  font-size: 2em;
+  text-align: center;
+  padding-top: 50%;
+  margin-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
 
-/* @import 'bootstrap.min.css';*/
+.fixed-top-nav {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  padding: 24px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}

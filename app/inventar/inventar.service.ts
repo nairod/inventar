@@ -53,23 +53,12 @@ export class InventarService {
 
     const sourcePath = this.getFolder();
     const photos_on_disk: string[] = fs.readdirSync(sourcePath);
-
-    //    let userDataPath = this._electronService.remote.app.getPath('userData');
-    // let targetPath = userDataPath + '/inventarData/' + this.generateUUID();
-
-    //this.createDir(targetPath);
-
+    // Todo: rekursiv einlesen
     for (let photo of photos_on_disk) {
 
       const nativeImage = this._electronService.remote.require('electron').nativeImage;
       let image = nativeImage.createFromPath(sourcePath + '/' + photo);
       let resizedImage = image.resize({ width: 600 });
-      //let id: string = this.generateUUID();
-      //let photoName = id + '.png';
-
-
-      //    let fullPath = targetPath + '/' + photoName;
-      //fs.writeFileSync(fullPath, resizedImage.toPng());
 
       const artikel: Artikel = new Artikel(undefined, undefined, undefined, 0, 0, resizedImage.toDataURL());
 
@@ -84,28 +73,9 @@ export class InventarService {
     this._databaseService.importDatabaseFile(file, false);
   }
 
-  public exortDatabase(): void {
+  public exportDatabase(): void {
     const file = this.getFile();
     console.log('export: ' + file);
     this._databaseService.exportDatabaseFile(file);
-  }
-  /*
-    generateUUID() {
-      let time = new Date().getTime();
-      const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = (time + Math.random() * 16) % 16 | 0;
-        time = Math.floor(time / 16);
-        return (c === 'x' ? r : (r & 0x7 | 0x8)).toString(16);
-      });
-      return uuid.toUpperCase();
-    }
-  */
-  createDir(dirname: string) {
-    const fs = this._electronService.remote.require('fs.extra');
-    try {
-      fs.mkdirpSync(dirname);
-    } catch (e) {
-      throw e;
-    }
   }
 }

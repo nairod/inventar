@@ -1,43 +1,46 @@
 <md-card>
-  <md-grid-list cols="2">
-    <md-grid-tile>
-      <form (ngSubmit)="onSubmit()" #artikelForm="ngForm" style="width: 100%">
-        <md-list>
-          <md-list-item>
-            <md-input-container style="width: 90%">
-              <input mdInput placeholder="Bezeichnung" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
-            </md-input-container>
-          </md-list-item>
-          <md-list-item>
-            <md-select style="width: 90%" placeholder="Kategorie" [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
-              <md-option *ngFor="let kat of kategorien" [value]="kat">
-                {{ kat }}
-              </md-option>
-            </md-select>
-          </md-list-item>
-          <md-list-item>
-            <md-input-container>
-              <input mdInput placeholder="Einstandspreis" type="number" id="einstandspreis" [(ngModel)]="artikel.einstandspreis" name="einstandspreis"
-                #einstandspreis="ngModel">
-            </md-input-container>
-          </md-list-item>
-          <md-list-item>
-            <md-input-container>
-              <input mdInput placeholder="Verkaufspreis" type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis"
-                name="verkaufspreis" #verkaufspreis="ngModel">
-            </md-input-container>
-          </md-list-item>
-        </md-list>
-      </form>
-    </md-grid-tile>
-    <md-grid-tile>
-      <img md-card-image src="{{artikel.imagePath}}">
-    </md-grid-tile>
-  </md-grid-list>
+  <md-card-content>
+    <md-grid-list rowHeight="1:1" cols="2">
+      <md-grid-tile>
+        <form (ngSubmit)="onSubmit()" #artikelForm="ngForm" style="width: 100%">
+          <md-list>
+            <md-list-item>
+              <md-input-container style="width: 90%;">
+                <input mdInput placeholder="Bezeichnung" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
+              </md-input-container>
+            </md-list-item>
+            <md-list-item>
+              <md-select style="width: 90%;" placeholder="Kategorie" [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
+                <md-option *ngFor="let kat of kategorien" [value]="kat">
+                  {{ kat }}
+                </md-option>
+              </md-select>
+            </md-list-item>
+            <md-list-item>
+              <md-input-container>
+                <input mdInput placeholder="Einstandspreis" type="number" id="einstandspreis" [(ngModel)]="artikel.einstandspreis" name="einstandspreis"
+                  #einstandspreis="ngModel">
+              </md-input-container>
+            </md-list-item>
+            <md-list-item>
+              <md-input-container>
+                <input mdInput placeholder="Verkaufspreis" type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis"
+                  name="verkaufspreis" #verkaufspreis="ngModel">
+              </md-input-container>
+            </md-list-item>
+          </md-list>
+        </form>
+      </md-grid-tile>
+      <md-grid-tile>
+        <img md-card-image src="{{artikel.imagePath}}">
+      </md-grid-tile>
+    </md-grid-list>
+  </md-card-content>
   <md-card-actions>
     <button md-raised-button (click)="previous()">Letzter</button>
     <button md-raised-button (click)="next()">Nächster</button>
     <button md-raised-button [routerLink]="['']">  Übersicht</button>
     <button md-raised-button (click)="onSubmit()" [disabled]="!artikelForm.form.valid">Speichern</button>
+    <button md-raised-button (click)="delete()">Löschen</button>
   </md-card-actions>
 </md-card>

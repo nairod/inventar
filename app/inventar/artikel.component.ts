@@ -43,8 +43,14 @@ export class ArtikelComponent implements OnInit {
     this.artikel = this.dbService.previousFor(this.artikel);
     return this.artikel;
   }
+
   back() {
     this.location.back();
+  }
+
+  delete() {
+    this.dbService.delete(this.artikel._id);
+    this.next();
   }
 }
 

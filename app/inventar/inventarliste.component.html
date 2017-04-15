@@ -1,5 +1,4 @@
 <md-card>
-  <md-card-title>Inventar Glanzvoll</md-card-title>
   <md-card-content>
     <md-input-container style="width:100%;">
       <input mdInput placeholder="Suche nach Namen oder Kategorien" [mdAutocomplete]="auto" (blur)='updateFilter($event)'>
@@ -25,17 +24,19 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Kategorie" [flexGrow]="2">
         <template let-value="value" ngx-datatable-cell-template>
-          <md-card> {{value}}</md-card>
+          {{value}}
         </template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Einstandspreis" [flexGrow]="2">
         <template let-value="value" ngx-datatable-cell-template>
-          <md-card>{{value}}</md-card>
+          <div class="box">
+            {{value}}
+          </div>
         </template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Verkaufspreis" [flexGrow]="2">
         <template let-value="value" ngx-datatable-cell-template>
-          <md-card>{{value}}</md-card>
+          <div class="box">{{value}}</div>
         </template>
       </ngx-datatable-column>
     </ngx-datatable>

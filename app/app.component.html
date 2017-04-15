@@ -1,15 +1,19 @@
-<div class="container-fluid">
-  <div class="row" style="margin-bottom: 80px">
-    <nav class="navbar fixed-top navbar-light bg-faded">
-      <button md-button [mdMenuTriggerFor]="menu">Menu</button>
-      <md-menu #menu="mdMenu">
-        <button md-menu-item [routerLink]="['']">Übersicht</button>
-        <button md-menu-item (click)="openInventar()">Inventar öffnen</button>
-        <button md-menu-item (click)="loadPhotos()">Bilder laden</button>
-        <button md-menu-item (click)="importDatabase()">Datenbank importieren</button>
-        <button md-menu-item (click)="exportDatabase()">Datenbank exportieren</button>
-      </md-menu>
-    </nav>
-  </div>
+<md-toolbar color="primary" class="fixed-top-nav">
+  <span>Inventar Glanzvoll</span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+  <md-menu #menu="mdMenu">
+    <button md-menu-item [routerLink]="['']">Übersicht</button>
+    <button md-menu-item (click)="loadPhotos()">Bilder laden</button>
+    <button md-menu-item (click)="importDatabase()">Datenbank importieren</button>
+    <button md-menu-item (click)="exportDatabase()">Datenbank exportieren</button>
+    <button md-menu-item (click)="deleteAll()">Datenbank leeren</button>
+  </md-menu>
+</md-toolbar>
+<div style="margin-top: 80px;">
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>

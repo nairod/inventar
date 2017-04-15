@@ -41,10 +41,10 @@ export class InventarlisteComponent implements OnInit {
 
 
   updateFilter(event: any) {
-    let val = event.target.value;
+    let val: string = event.target.value;
     // filter our data
     const temp = this.temp.filter(f => {
-      return !val || f.kategorie.toLowerCase().indexOf(val) !== -1 || f.name.toLowerCase().indexOf(val) !== -1;
+      return !val || f.kategorie.toLowerCase().indexOf(val.toLowerCase()) !== -1 || f.name.toLowerCase().indexOf(val.toLowerCase()) !== -1;
     });
 
     // update the rows

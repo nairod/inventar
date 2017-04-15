@@ -1,13 +1,11 @@
-read images recursive
-ladebalken für liste
+performance: back to overview -> replay subject?
 print
+icon für application
 add entry without image
-delete entries
+next in category?
+kategorie dynamisch und aus ordnernamen automatisch erstellen
+drag drop für bilder
 typeahead bug case sensitive
 timer on typeahead
-performace: back to overview -> replay subject?
-next in category?
 export zippen
-icon für application
-optik auf overview
-drag drop für bilder
+

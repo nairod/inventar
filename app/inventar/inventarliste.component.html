@@ -1,4 +1,10 @@
-<md-card>
+<md-card *ngIf="!loaded">
+  <md-card-subtitle>
+    Die Daten werden geladen ...
+  </md-card-subtitle>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+</md-card>
+<md-card *ngIf="loaded">
   <md-card-content>
     <md-input-container style="width:100%;">
       <input mdInput placeholder="Suche nach Namen oder Kategorien" [mdAutocomplete]="auto" (blur)='updateFilter($event)'>
@@ -41,7 +47,4 @@
       </ngx-datatable-column>
     </ngx-datatable>
   </md-card-content>
-  <md-card-actions>
-    <button md-raised-button (click)="reload()">reload</button>
-  </md-card-actions>
 </md-card>

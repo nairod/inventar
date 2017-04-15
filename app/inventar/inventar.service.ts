@@ -50,14 +50,17 @@ export class InventarService {
 
   public loadPhotos(): void {
     const fs = this._electronService.remote.require('fs');
+    const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
 
     const sourcePath = this.getFolder();
-    const photos_on_disk: string[] = fs.readdirSync(sourcePath);
+    // const photos_on_disk: string[] = fs.readdirSync(sourcePath);
+    const photos_on_disk: string[] = recursiveReadSync(sourcePath);
+
     // Todo: rekursiv einlesen
     for (let photo of photos_on_disk) {
 
       const nativeImage = this._electronService.remote.require('electron').nativeImage;
-      let image = nativeImage.createFromPath(sourcePath + '/' + photo);
+      let image = nativeImage.createFromPath(photo);
       let resizedImage = image.resize({ width: 600 });
 
       const artikel: Artikel = new Artikel(undefined, undefined, undefined, 0, 0, resizedImage.toDataURL());
@@ -65,6 +68,7 @@ export class InventarService {
       this._databaseService.insert(artikel);
       console.log(photo + ' inserted');
     }
+    this._databaseService.loadAll();
   }
 
   public importDatabase(): void {

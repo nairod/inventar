@@ -24,6 +24,7 @@ export class InventarlisteComponent implements OnInit {
   temp: any[] = [];
   kategorien: string[];
   inventarliste: Observable<Artikel[]>;
+  loaded: boolean = false;
 
   constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
 
@@ -35,6 +36,7 @@ export class InventarlisteComponent implements OnInit {
     this._dbService.artikelObservable.subscribe(liste => {
       this.temp = [...liste];
       this.rows = liste;
+      this.loaded = liste.length > 0;
     });
     this._dbService.openDatabase('mainDB').loadAll();
   }

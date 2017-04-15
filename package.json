@@ -47,6 +47,7 @@
     "material-design-icons": "^3.0.1",
     "nedb": "^1.8.0",
     "ngx-electron": "0.0.10",
+    "recursive-readdir-sync": "^1.0.6",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.1.1",
     "systemjs": "0.20.12",

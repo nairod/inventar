@@ -31,10 +31,12 @@ export class DatabaseService {
       filename: folderName + '/inventarBig.nedb',
       autoload: true
     });
+    /*
     db.ensureIndex({
       fieldName: 'imagePath',
       unique: true
     });
+    */
     this.inventarDB = db;
     return this;
   }
@@ -146,7 +148,13 @@ export class DatabaseService {
   }
 
   public insert(artikel: Artikel) {
-    this.inventarDB.insert<Artikel>(artikel);
+    this.inventarDB.insert<Artikel>(artikel, (err: Error, doc: Artikel) => {
+      if (!err) {
+        console.log('inserted artikel with id ' + doc._id);
+      } else {
+        console.log('failed to insert artikel');
+      }
+    });
   }
 
   public deleteAll() {

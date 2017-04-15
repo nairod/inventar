@@ -85,10 +85,8 @@ export class DatabaseService {
   }
 
   loadAll(): void {
-    console.log('liste ', this.artikelStore.liste);
-    console.log('db ', this.inventarDB);
-    console.log('obs ', this.artikelObservable);
-    if (this.inventarDB) {
+    console.log('load all ', this.artikelStore.liste);
+    if (this.artikelStore.liste.length === 0) {
       this._ngZone.run(() => {
         this.inventarDB.find<Artikel>({}, (e, docs) => {
           if (!e) {

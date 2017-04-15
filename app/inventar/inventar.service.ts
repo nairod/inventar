@@ -49,7 +49,6 @@ export class InventarService {
   };
 
   public loadPhotos(): void {
-    const fs = this._electronService.remote.require('fs');
     const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
 
     const sourcePath = this.getFolder();

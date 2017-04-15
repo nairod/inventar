@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MaterialModule } from '@angular/material';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './reuse-strategy';
 
 @NgModule({
   imports: [
@@ -23,7 +25,10 @@ import { MaterialModule } from '@angular/material';
     BrowserAnimationsModule
   ],
   declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+  ]
 })
 export class AppModule { }
 

@@ -1,4 +1,3 @@
-icon für application
 add entry without image
 print
 kategorie dynamisch und aus ordnernamen automatisch erstellen

@@ -52,10 +52,8 @@ export class InventarService {
     const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
 
     const sourcePath = this.getFolder();
-    // const photos_on_disk: string[] = fs.readdirSync(sourcePath);
     const photos_on_disk: string[] = recursiveReadSync(sourcePath);
 
-    // Todo: rekursiv einlesen
     for (let photo of photos_on_disk) {
 
       const nativeImage = this._electronService.remote.require('electron').nativeImage;

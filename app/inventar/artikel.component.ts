@@ -13,9 +13,11 @@ import { DatabaseService } from './database.service';
 export class ArtikelComponent implements OnInit {
   artikel: Artikel = {} as Artikel;
   kategorien: string[];
+  private artikelChanged: boolean = false;
 
   onSubmit() {
     this.dbService.update(this.artikel);
+    this.artikelChanged = true;
   }
 
   // TODO: Remove this when we're done
@@ -51,6 +53,10 @@ export class ArtikelComponent implements OnInit {
   delete() {
     this.dbService.delete(this.artikel._id);
     this.next();
+  }
+
+  artikelChangedQueryParam(): any {
+    return { reload: this.artikelChanged };
   }
 }
 

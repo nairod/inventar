@@ -26,9 +26,11 @@ import { CustomReuseStrategy } from './reuse-strategy';
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
+
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
   ]
+
 })
 export class AppModule { }
 

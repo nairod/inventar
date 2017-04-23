@@ -76,12 +76,12 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       console.log(this.compareObjects(route.queryParams, this.storedRoutes[route.routeConfig.path].snapshot.queryParams));
 
       let paramsMatch: boolean = this.compareObjects(route.params, this.storedRoutes[route.routeConfig.path].snapshot.params);
-      // tslint:disable-next-line:max-line-length
       let queryParamsMatch: boolean = this.compareObjects(route.queryParams, this.storedRoutes[route.routeConfig.path].snapshot.queryParams);
 
-      // tslint:disable-next-line:max-line-length
+      // nur wenn der Artikel geändert wurde muss die Liste neu geladen werden
+      let reloadRequired: boolean = route.queryParams.hasOwnProperty('reload') && this.compareObjects(route.queryParams, { reload: 'true' });
       console.log('deciding to attach...', route, 'does it match?', this.storedRoutes[route.routeConfig.path].snapshot, 'return: ', paramsMatch && queryParamsMatch);
-      return paramsMatch && queryParamsMatch;
+      return paramsMatch && queryParamsMatch && !reloadRequired;
     } else {
       return false;
     }

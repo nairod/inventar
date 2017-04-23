@@ -1,6 +1,6 @@
 <md-card>
   <md-card-content>
-    <md-grid-list rowHeight="1:1" cols="2">
+    <md-grid-list cols="2">
       <md-grid-tile>
         <form (ngSubmit)="onSubmit()" #artikelForm="ngForm" style="width: 100%">
           <md-list>
@@ -39,7 +39,7 @@
   <md-card-actions>
     <button md-raised-button (click)="previous()">Letzter</button>
     <button md-raised-button (click)="next()">Nächster</button>
-    <button md-raised-button [routerLink]="['']">  Übersicht</button>
+    <button md-raised-button [routerLink]="['/']" [queryParams]="artikelChangedQueryParam()">  Übersicht</button>
     <button md-raised-button (click)="onSubmit()" [disabled]="!artikelForm.form.valid">Speichern</button>
     <button md-raised-button (click)="delete()">Löschen</button>
   </md-card-actions>

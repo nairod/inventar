@@ -22,7 +22,6 @@ export class DatabaseService {
     this.artikelObservable = this._artikelSubject.asObservable();
     console.log('BehaviorSubject', this._artikelSubject);
     console.log('Observable', this.artikelObservable);
-
   }
 
   openDatabase(folderName: string): DatabaseService {
@@ -86,18 +85,16 @@ export class DatabaseService {
 
   loadAll(): void {
     console.log('load all ', this.artikelStore.liste);
-    if (this.artikelStore.liste.length === 0) {
-      this._ngZone.run(() => {
-        this.inventarDB.find<Artikel>({}, (e, docs) => {
-          if (!e) {
-            this.artikelStore.liste = docs;
-            this._artikelSubject.next(this.artikelStore.liste);
-            console.log('dbservice subject', this._artikelSubject);
-            console.log('dbservice items', this.artikelObservable);
-          }
-        });
+    this._ngZone.run(() => {
+      this.inventarDB.find<Artikel>({}, (e, docs) => {
+        if (!e) {
+          this.artikelStore.liste = docs;
+          this._artikelSubject.next(this.artikelStore.liste);
+          console.log('dbservice subject', this._artikelSubject);
+          console.log('dbservice items', this.artikelObservable);
+        }
       });
-    }
+    });
   }
 
   public getArtikel(id: number | string): Promise<Artikel> {
@@ -124,13 +121,13 @@ export class DatabaseService {
         }
       },
       {
-        multi: true
+        multi: false
       },
       (err: Error, numReplaced: number) => {
         if (err) {
-          // TODO: handle error
+          console.log('error storing ', artikel.name);
         } else {
-          console.log('updated', artikel.name);
+          console.log('updated ', artikel.name);
         }
       });
   }

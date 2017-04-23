@@ -4,11 +4,13 @@ var app = electron.app;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow;
+var path = require('path')
 
 function createWindow() {
   mainWindow = new electron.BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   });
   // We load this over http when running locally to take advantage of BrowserSync. Because the lite-server
   // usually takes a few seconds to start, we add the 3 second pause.

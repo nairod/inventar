@@ -1,11 +1,11 @@
-print
 icon für application
 add entry without image
-next in category?
+print
 kategorie dynamisch und aus ordnernamen automatisch erstellen
+next in category?
 typeahead bug case sensitive
 timer on typeahead
 suchfeld in menubar
 drag drop für bilder
-export zippen
+
 

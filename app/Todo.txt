@@ -5,6 +5,7 @@ next in category?
 typeahead bug case sensitive
 timer on typeahead
 suchfeld in menubar
+error visualisierung
 drag drop für bilder
 
 

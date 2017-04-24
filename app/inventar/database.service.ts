@@ -102,6 +102,7 @@ export class DatabaseService {
       return this.inventarDB.findOne({ _id: id }, ((err: Error, artikel: Artikel) => {
         if (err) {
           reject(err);
+          console.log('Failed to load', artikel.name);
         } else {
           console.log('Got', artikel.name);
           resolve(artikel);

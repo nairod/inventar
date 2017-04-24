@@ -16,7 +16,11 @@ export class ArtikelComponent implements OnInit {
   private artikelChanged: boolean = false;
 
   onSubmit() {
-    this.dbService.update(this.artikel);
+    if (this.artikel._id) {
+      this.dbService.update(this.artikel);
+    } else {
+      this.dbService.insert(this.artikel);
+    }
     this.artikelChanged = true;
   }
 
@@ -29,7 +33,9 @@ export class ArtikelComponent implements OnInit {
     private inventarService: InventarService,
     private location: Location) {
     let id: string = this.route.snapshot.params['id'];
-    this.dbService.getArtikel(id).then(artikel => this.artikel = artikel);
+    if (id !== undefined) {
+      this.dbService.getArtikel(id).then(artikel => this.artikel = artikel);
+    }
   }
 
   ngOnInit() {

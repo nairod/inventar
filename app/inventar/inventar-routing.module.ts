@@ -13,8 +13,9 @@ const routes: Routes = [
     path: '',
     component: InventarComponent,
     children: [
+      { path: 'new', component: ArtikelComponent },
       { path: '', component: InventarlisteComponent },
-      { path: ':id', component: ArtikelComponent },
+      { path: ':id', component: ArtikelComponent }
     ]
   }
 ];

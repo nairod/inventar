@@ -15,7 +15,8 @@
       </md-option>
     </md-autocomplete>
 
-    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [headerHeight]="50" [rowHeight]="'auto'" [columnMode]="'flex'">
+    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [headerHeight]="50" [rowHeight]="'auto'" [columnMode]="'flex'"
+      [loadingIndicator]="!loaded">
       <ngx-datatable-column name="Name" [flexGrow]="5">
         <template let-row="row" let-value="value" ngx-datatable-cell-template>
           <md-card>

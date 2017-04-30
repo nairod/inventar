@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { Artikel, InventarService } from './inventar.service';
-import { DatabaseService } from './database.service';
+import { InventarService } from '../services/inventar.service';
+import { Artikel } from '../models/artikel';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
-  templateUrl: './app/inventar/artikel.component.html',
-  styleUrls: ['./app/inventar/artikel.component.css']
+  templateUrl: './app/inventar/artikel/artikel.component.html',
+  styleUrls: ['./app/inventar/artikel/artikel.component.css']
 })
 
 export class ArtikelComponent implements OnInit {

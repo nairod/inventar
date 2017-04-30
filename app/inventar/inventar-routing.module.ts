@@ -5,8 +5,8 @@ import {
 } from '@angular/router';
 
 import { InventarComponent } from './inventar.component';
-import { InventarlisteComponent } from './inventarliste.component';
-import { ArtikelComponent } from './artikel.component';
+import { InventarlisteComponent } from './inventarliste/inventarliste.component';
+import { ArtikelComponent } from './artikel/artikel.component';
 
 const routes: Routes = [
   {

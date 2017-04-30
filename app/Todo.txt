@@ -1,10 +1,10 @@
-add entry without image
 print
-kategorie dynamisch und aus ordnernamen automatisch erstellen
-next in category?
 typeahead bug case sensitive
 timer on typeahead
 suchfeld in menubar
+bild für einzel entry
+kategorie dynamisch und aus ordnernamen automatisch erstellen
+next in category?
 error visualisierung
 drag drop für bilder
 

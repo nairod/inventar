@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { InventarService } from './inventar/inventar.service';
-import { DatabaseService } from './inventar/database.service';
+import { InventarService } from './inventar/services/inventar.service';
+import { DatabaseService } from './inventar/services/database.service';
 
 @Component({
   selector: 'my-app',

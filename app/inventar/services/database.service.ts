@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import * as Datastore from 'nedb';
 
 import { ElectronService } from 'ngx-electron';
-import { Artikel } from './inventar.service';
+import { Artikel } from '../models/artikel';
 
 
 @Injectable()

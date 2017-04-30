@@ -2,12 +2,12 @@ import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { Artikel } from './inventar.service';
-import { DatabaseService } from './database.service';
-import { InventarService } from './inventar.service';
+import { Artikel } from '../models/artikel';
+import { DatabaseService } from '../services/database.service';
+import { InventarService } from '../services/inventar.service';
 
 @Component({
-  templateUrl: './app/inventar/inventarliste.component.html',
+  templateUrl: './app/inventar/inventarliste/inventarliste.component.html',
 })
 
 
@@ -25,9 +25,7 @@ export class InventarlisteComponent implements OnInit {
   kategorien: string[];
   inventarliste: Observable<Artikel[]>;
   loaded: boolean = false;
-
   constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
-
   }
 
   ngOnInit() {

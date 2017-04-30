@@ -1,18 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { DatabaseService } from './database.service';
-
-
-export class Artikel {
-  constructor(
-    public _id: string,
-    public name: string,
-    public kategorie: string,
-    public einstandspreis: number,
-    public verkaufspreis: number,
-    public imagePath: string) { }
-}
-
+import { Artikel } from '../models/artikel';
 
 @Injectable()
 export class InventarService {

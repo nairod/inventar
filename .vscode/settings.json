@@ -6,13 +6,10 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/.DS_Store": true,
-    "app/*.js": true,
-    "app/*.map": true,
-    "app/*/*.js": true,
-    "app/*/*.map": true
+    "app/**/*.js": true,
+    "app/**/*.map": true
   },
   "workbench.editor.showIcons": true,
-  "beautify.onSave": ["js", "html", "css"],
-"editor.formatOnSave": true,
-"eslint.enable": false
+  "editor.formatOnSave": true,
+  "eslint.enable": false
 }

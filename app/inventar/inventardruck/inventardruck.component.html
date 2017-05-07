@@ -1,0 +1,23 @@
+<div *ngIf="loaded">
+  <div *ngFor="let kategorie of kategorien">
+    <md-card>
+      <md-card-header>
+        <md-card-title>
+          {{kategorie.name}} Total EP: {{kategorie.totalEP}} / Total VP: {{kategorie.totalVP}}
+        </md-card-title>
+      </md-card-header>
+      <div *ngFor="let chunk of kategorie.chunks">
+        <figure class="einzel" *ngFor="let artikel of chunk">
+          <img src="{{artikel.imagePath}}">
+          <figcaption>{{artikel.name}} <br> EP: {{artikel.einstandspreis}} - VP: {{artikel.verkaufspreis}}</figcaption>
+        </figure>
+      </div>
+    </md-card>
+  </div>
+</div>
+<md-card *ngIf="!loaded">
+  <md-card-subtitle>
+    Die Daten werden geladen ...
+  </md-card-subtitle>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+</md-card>

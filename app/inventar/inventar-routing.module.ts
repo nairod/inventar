@@ -6,6 +6,7 @@ import {
 
 import { InventarComponent } from './inventar.component';
 import { InventarlisteComponent } from './inventarliste/inventarliste.component';
+import { InventardruckComponent } from './inventardruck/inventardruck.component';
 import { ArtikelComponent } from './artikel/artikel.component';
 
 const routes: Routes = [
@@ -14,8 +15,9 @@ const routes: Routes = [
     component: InventarComponent,
     children: [
       { path: 'new', component: ArtikelComponent },
-      { path: '', component: InventarlisteComponent },
-      { path: ':id', component: ArtikelComponent }
+      { path: 'print', component: InventarlisteComponent },
+      { path: ':id', component: ArtikelComponent },
+      { path: '', component: InventardruckComponent }
     ]
   }
 ];

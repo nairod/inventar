@@ -2,6 +2,7 @@ print
 typeahead bug case sensitive
 timer on typeahead
 suchfeld in menubar
+chunksize variabel für printing
 bild für einzel entry
 kategorie dynamisch und aus ordnernamen automatisch erstellen
 next in category?

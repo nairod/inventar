@@ -9,9 +9,7 @@ import { DatabaseService } from './inventar/services/database.service';
 })
 export class AppComponent {
 
-  constructor(private _inventarService: InventarService, private _dbService: DatabaseService) {
-
-  }
+  constructor(private _inventarService: InventarService, private _dbService: DatabaseService) { }
 
   public loadPhotos() {
     this._inventarService.loadPhotos();
@@ -26,5 +24,9 @@ export class AppComponent {
 
   public deleteAll() {
     this._dbService.deleteAll();
+  }
+
+  public print() {
+    this._inventarService.print();
   }
 }

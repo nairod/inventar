@@ -1,18 +1,21 @@
 <div *ngIf="loaded">
-  <div *ngFor="let kategorie of kategorien">
-    <md-card>
-      <md-card-header>
-        <md-card-title>
-          {{kategorie.name}} Total EP: {{kategorie.totalEP}} / Total VP: {{kategorie.totalVP}}
-        </md-card-title>
-      </md-card-header>
+  <div class="kategorie" *ngFor="let kategorie of kategorien">
+    <figure>
+      <h2>
+        {{kategorie.name}}
+      </h2>
       <div *ngFor="let chunk of kategorie.chunks">
         <figure class="einzel" *ngFor="let artikel of chunk">
-          <img src="{{artikel.imagePath}}">
-          <figcaption>{{artikel.name}} <br> EP: {{artikel.einstandspreis}} - VP: {{artikel.verkaufspreis}}</figcaption>
+          <a routerLink={{artikel._id}}>
+            <img src="{{artikel.imagePath}}">
+            <figcaption class="einzel">{{artikel.name}} <br> EP: {{artikel.einstandspreis}} - VP: {{artikel.verkaufspreis}}</figcaption>
+          </a>
         </figure>
       </div>
-    </md-card>
+    </figure>
+    <h3>
+      Total EP: {{kategorie.totalEP}} / Total VP: {{kategorie.totalVP}}
+    </h3>
   </div>
 </div>
 <md-card *ngIf="!loaded">

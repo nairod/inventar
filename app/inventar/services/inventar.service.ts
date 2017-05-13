@@ -9,6 +9,15 @@ export class InventarService {
   ['Anhänger', 'Perlenkette', 'Edelsteine ', 'Eheringe', 'Kinderketteli',
     'Ring', 'Ohrschmuck', 'Collier', 'Armkette'];
 
+  private printSettings: Electron.PrintToPDFOptions =
+  {
+    landscape: false,
+    marginsType: 1,
+    printBackground: false,
+    printSelectionOnly: false,
+    pageSize: 'A4',
+  };
+
   constructor(private _databaseService: DatabaseService, private _electronService: ElectronService) { }
 
 
@@ -25,14 +34,14 @@ export class InventarService {
 
   private getFolder(): string {
     return this._electronService.remote.dialog.showOpenDialog({
-      title: 'Select a folder',
+      title: 'Ordner auswählen',
       properties: ['openDirectory']
     })[0];
   };
 
   private getFile(): string {
     return this._electronService.remote.dialog.showOpenDialog({
-      title: 'Inventar Datenbank auswählen',
+      title: 'Datei auswählen',
       properties: ['openFile']
     })[0];
   };
@@ -68,4 +77,22 @@ export class InventarService {
     console.log('export: ' + file);
     this._databaseService.exportDatabaseFile(file);
   }
+
+  public print() {
+    const file: string = this.getFile();
+    const fs = this._electronService.remote.require('fs');
+    this._electronService.remote.webContents.getFocusedWebContents().printToPDF(this.printSettings, (err, data) => {
+      if (err) {
+        // dialog.showErrorBox('Error', err);
+        return;
+      }
+      fs.writeFile(file, data, function (err1) {
+        if (err1) {
+          // dialog.showErrorBox('Error', err);
+          return;
+        }
+      });
+    });
+  }
+
 }

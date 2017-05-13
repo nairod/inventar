@@ -3,32 +3,30 @@
     <md-grid-list cols="2">
       <md-grid-tile>
         <form (ngSubmit)="onSubmit()" #artikelForm="ngForm" style="width: 100%">
-          <md-list>
-            <md-list-item>
-              <md-input-container style="width: 90%;">
-                <input mdInput placeholder="Bezeichnung" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
-              </md-input-container>
-            </md-list-item>
-            <md-list-item>
-              <md-select style="width: 90%;" placeholder="Kategorie" [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
-                <md-option *ngFor="let kat of kategorien" [value]="kat">
-                  {{ kat }}
-                </md-option>
-              </md-select>
-            </md-list-item>
-            <md-list-item>
-              <md-input-container>
-                <input mdInput placeholder="Einstandspreis" type="number" id="einstandspreis" [(ngModel)]="artikel.einstandspreis" name="einstandspreis"
-                  #einstandspreis="ngModel">
-              </md-input-container>
-            </md-list-item>
-            <md-list-item>
-              <md-input-container>
-                <input mdInput placeholder="Verkaufspreis" type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis"
-                  name="verkaufspreis" #verkaufspreis="ngModel">
-              </md-input-container>
-            </md-list-item>
-          </md-list>
+          <p>
+            <md-input-container floatPlaceholder="auto" style="width: 90%;">
+              <input mdInput placeholder="Bezeichnung" id="name" required [(ngModel)]="artikel.name" name="name" #name="ngModel">
+            </md-input-container>
+          </p>
+          <p>
+            <md-select style="width: 90%;" placeholder="Kategorie" [(ngModel)]="artikel.kategorie" name="kategorie" #kategorie="ngModel">
+              <md-option *ngFor="let kat of kategorien" [value]="kat">
+                {{ kat }}
+              </md-option>
+            </md-select>
+          </p>
+          <p>
+            <md-input-container>
+              <input mdInput placeholder="Einstandspreis" type="number" id="einstandspreis" [(ngModel)]="artikel.einstandspreis" name="einstandspreis"
+                #einstandspreis="ngModel">
+            </md-input-container>
+          </p>
+          <p>
+            <md-input-container>
+              <input mdInput placeholder="Verkaufspreis" type="number" class="form-control" id="verkaufspreis" [(ngModel)]="artikel.verkaufspreis"
+                name="verkaufspreis" #verkaufspreis="ngModel">
+            </md-input-container>
+          </p>
         </form>
       </md-grid-tile>
       <md-grid-tile>

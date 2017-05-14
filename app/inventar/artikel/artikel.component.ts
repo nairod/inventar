@@ -25,9 +25,6 @@ export class ArtikelComponent implements OnInit {
     this.artikelChanged = true;
   }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.artikel); }
-
   constructor(
     private route: ActivatedRoute,
     private dbService: DatabaseService,
@@ -60,6 +57,10 @@ export class ArtikelComponent implements OnInit {
   delete() {
     this.dbService.delete(this.artikel._id);
     this.next();
+  }
+
+  addPhoto() {
+    this.artikel.imagePath = this.inventarService.addPhoto();
   }
 
   artikelChangedQueryParam(): any {

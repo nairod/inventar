@@ -1,5 +1,6 @@
+bug: vervielfältigung anzeige in liste nach edit
+bug: aktualisierung nach edit
 chunksize variabel für printing
-bild für einzel entry
 kategorie dynamisch und aus ordnernamen automatisch erstellen
 next in category?
 error visualisierung

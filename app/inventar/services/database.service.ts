@@ -131,7 +131,8 @@ export class DatabaseService {
           name: artikel.name,
           kategorie: artikel.kategorie,
           einstandspreis: artikel.einstandspreis,
-          verkaufspreis: artikel.verkaufspreis
+          verkaufspreis: artikel.verkaufspreis,
+          imagePath: artikel.imagePath
         }
       },
       {

@@ -46,6 +46,21 @@ export class InventarService {
     })[0];
   };
 
+  private createImage(photo: string) {
+    const nativeImage = this._electronService.remote.require('electron').nativeImage;
+    let image = nativeImage.createFromPath(photo);
+    return image.resize({ width: 600 });
+  }
+
+  public addPhoto() {
+    const photoPath: string = this._electronService.remote.dialog.showOpenDialog({
+      title: 'Foto auswählen',
+      properties: ['openFile'],
+      filters: [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif'] }]
+    })[0];
+    return this.createImage(photoPath).toDataURL();
+  }
+
   public loadPhotos(): void {
     const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
 
@@ -54,9 +69,7 @@ export class InventarService {
 
     for (let photo of photos_on_disk) {
 
-      const nativeImage = this._electronService.remote.require('electron').nativeImage;
-      let image = nativeImage.createFromPath(photo);
-      let resizedImage = image.resize({ width: 600 });
+      let resizedImage = this.createImage(photo);
 
       const artikel: Artikel = new Artikel(undefined, undefined, undefined, 0, 0, resizedImage.toDataURL());
 

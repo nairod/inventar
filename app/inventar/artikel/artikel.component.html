@@ -38,6 +38,7 @@
     <button raised-button (click)="previous()"><md-icon>arrow_back</md-icon></button>
     <button raised-button (click)="next()"><md-icon>arrow_forward</md-icon></button>
     <button raised-button [routerLink]="['/']" [queryParams]="artikelChangedQueryParam()"><md-icon>view_list</md-icon></button>
+    <button raised-button (click)="addPhoto()"><md-icon>add_a_photo</md-icon></button>
     <button raised-button (click)="onSubmit()" [disabled]="!artikelForm.form.valid"><md-icon>check</md-icon></button>
     <button raised-button (click)="delete()"><md-icon>delete</md-icon></button>
   </md-card-actions>

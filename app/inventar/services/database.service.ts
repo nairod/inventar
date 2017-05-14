@@ -84,7 +84,6 @@ export class DatabaseService {
   }
 
   loadAll(): void {
-    console.log('load all ', this.artikelStore.liste);
     this._ngZone.run(() => {
       this.inventarDB.find<Artikel>({}, (e, docs) => {
         if (!e) {
@@ -96,6 +95,20 @@ export class DatabaseService {
       });
     });
   }
+
+  loadByKategorie(kategorien: string[]): void {
+    this._ngZone.run(() => {
+      this.inventarDB.find<Artikel>({ kategorie: kategorien }, (e, docs) => {
+        if (!e) {
+          this.artikelStore.liste = docs;
+          this._artikelSubject.next(this.artikelStore.liste);
+          console.log('dbservice subject', this._artikelSubject);
+          console.log('dbservice items', this.artikelObservable);
+        }
+      });
+    });
+  }
+
 
   public getArtikel(id: number | string): Promise<Artikel> {
     return new Promise((resolve, reject) => {

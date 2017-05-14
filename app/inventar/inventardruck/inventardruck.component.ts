@@ -22,29 +22,42 @@ export class InventardruckComponent implements OnInit {
   ];
 
   kategorien: Kategorie[] = [];
+  kategorieComboListe: Kategorie[] = [];
+  tempKategorien: Kategorie[] = [];
   inventarliste: Observable<Artikel[]>;
   loaded: boolean = false;
+  selectedValue: string[] = [];
   constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
   }
 
   ngOnInit() {
     this.inventarliste = this._dbService.artikelObservable;
-
-
     this._dbService.artikelObservable.subscribe(liste => {
       _(liste).chain()
         .groupBy(art => art.kategorie)
         .forEach((group: Artikel[]) => {
-          this.kategorien.push(new Kategorie(group[0].kategorie, group));
+          const kat = new Kategorie(group[0].kategorie, group);
+          this.kategorien.push(kat);
+          this.kategorieComboListe.push(kat);
+          this.selectedValue.push(kat.name);
           console.log(group[0].kategorie);
         })
         .value();
       this.loaded = liste.length > 0;
+      this.tempKategorien = [...this.kategorien];
     });
     this._dbService.openDatabase('mainDB').loadAll();
   }
 
-
+  kategorieChange() {
+    console.log(this.selectedValue);
+    const temp = _.filter(
+      this.tempKategorien, k => {
+        return this.selectedValue.indexOf(k.name) > -1;
+      }
+    );
+    this.kategorien = temp;
+  }
   reload() {
     this._dbService.loadAll();
   }

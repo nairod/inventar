@@ -1,18 +1,9 @@
 @import '/node_modules/@swimlane/ngx-datatable/release/index.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/themes/material.css';
 @import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
-@import '/node_modules/@angular/material/prebuilt-themes/purple-green.css';
-.box {
-  height: 100%;
-  width: 100%;
-  font-size: 2em;
-  text-align: center;
-  padding-top: 50%;
-  margin-left: 5px;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
+@import '/node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css';
+
+/*@import '/node_modules/@angular/material/prebuilt-themes/purple-green.css';*/
 
 .fixed-top-nav {
   position: fixed;
@@ -20,6 +11,14 @@
   top: 0;
   left: 0;
   padding: 24px;
+}
+
+.mat-option {
+  color: gainsboro;
+}
+
+.searchBox {
+  margin-bottom: 1em;
 }
 
 .fill-remaining-space {
@@ -44,6 +43,7 @@ figure.einzel {
   padding: 1%;
   border-color: gainsboro;
   margin-bottom: 2em;
+  overflow: auto;
 }
 
 body {

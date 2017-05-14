@@ -1,4 +1,11 @@
 <div *ngIf="loaded">
+  <form name="kategorieSearch" class="searchBox">
+    <md-select name="kategorieCombo" [(ngModel)]="selectedValue" (change)="kategorieChange()" color="accent" multiple="true"
+      style="width: 100%" placeholder="Kategorie" floatPlaceholder="never">
+      <md-option *ngFor="let kategorie of kategorieComboListe" [value]="kategorie.name">{{ kategorie.name }}
+      </md-option>
+    </md-select>
+  </form>
   <div class="kategorie" *ngFor="let kategorie of kategorien">
     <figure>
       <h2>
@@ -18,6 +25,7 @@
     </h3>
   </div>
 </div>
+
 <md-card *ngIf="!loaded">
   <md-card-subtitle>
     Die Daten werden geladen ...

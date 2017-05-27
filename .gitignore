@@ -12,3 +12,4 @@ _temp
 datastore
 dist
 *.ods*
+packages

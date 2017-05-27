@@ -30,12 +30,13 @@ export class InventardruckComponent implements OnInit {
   inventarliste: Observable<Artikel[]>;
   loaded = false;
   selectedValue: string[] = [];
-  constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
-  }
 
-  ngOnInit() {
+  constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
+
     this.inventarliste = this._dbService.artikelObservable;
     this._dbService.artikelObservable.subscribe(liste => {
+      this.kategorien = [];
+      this.kategorieComboListe = [];
       _(liste).chain()
         .groupBy(art => art.kategorie)
         .forEach((group: Artikel[]) => {
@@ -49,6 +50,9 @@ export class InventardruckComponent implements OnInit {
       this.loaded = liste.length > 0;
       this.tempKategorien = [...this.kategorien];
     });
+  }
+
+  ngOnInit() {
     this._dbService.openDatabase('datastore').loadAll();
   }
 

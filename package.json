@@ -19,8 +19,8 @@
     "package:all": "electron-packager . $npm_package_name-$npm_package_version --prune=true --ignore=src  --ignore=e2e --ignore=.*\\.conf\\.js --ignore=\"(angular-cli|tsconfig)\\.json\" --ignore=webpack.*\\.js --out=packages --all --overwrite"
   },
   "private": true,
-  "keywords": [],
-  "author": "",
+  "keywords": ["inventory"],
+  "author": "Dorian Nyffeler",
 
   "dependencies": {
     "@angular/animations": "~4.0.1",

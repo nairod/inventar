@@ -29,7 +29,6 @@ function createWindow() {
     win.webContents.openDevTools()
     require('devtron').install()
   }
-  win.webContents.openDevTools()
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows

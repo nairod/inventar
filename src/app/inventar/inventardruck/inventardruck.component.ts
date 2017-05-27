@@ -53,7 +53,7 @@ export class InventardruckComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._dbService.openDatabase('datastore').loadAll();
+    this._dbService.openDatabase().loadAll();
   }
 
   kategorieChange() {

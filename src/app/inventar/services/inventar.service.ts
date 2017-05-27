@@ -25,12 +25,6 @@ export class InventarService {
     return this._kategorien;
   }
 
-  public openInventar(): void {
-    const folder = this.getFolder();
-    console.log(folder);
-    this._databaseService.openDatabase(folder);
-    this._databaseService.loadAll();
-  }
 
   private getFolder(): string {
     return this._electronService.remote.dialog.showOpenDialog({

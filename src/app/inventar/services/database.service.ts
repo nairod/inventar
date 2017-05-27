@@ -24,10 +24,11 @@ export class DatabaseService {
     console.log('Observable', this.artikelObservable);
   }
 
-  openDatabase(folderName: string): DatabaseService {
-    this.dbPath = folderName;
+  openDatabase(): DatabaseService {
+    this.dbPath = this._electronService.remote.app.getPath('userData');
+    console.log(this._electronService.remote.app.getPath('userData'));
     const db = new Datastore({
-      filename: folderName + '/inventarBig.nedb',
+      filename: this.dbPath + '/inventarBig.nedb',
       autoload: true
     });
     /*
@@ -40,31 +41,39 @@ export class DatabaseService {
     return this;
   }
 
-  importDatabaseFile(dbFileName: string, legacy: boolean): void {
-    const nativeImage = this._electronService.remote.require('electron').nativeImage;
-    const Datastore = this._electronService.remote.require('nedb'),
-      db: Datastore = new Datastore({
-        filename: dbFileName,
-        autoload: true
-      });
-
-    db.find<Artikel>({}, (e, docs) => {
-      if (!e) {
-        for (let importedArtikel of docs) {
-          // TODO: auslagern da Duplikat in inventarservice, imagepath in imagedataurl umbenennen
-          if (legacy) {
-            let image = nativeImage.createFromPath(importedArtikel.imagePath);
-            if (!image.isEmpty()) {
-              let resizedImage = image.resize({ width: 400 });
-              importedArtikel.imagePath = resizedImage.toDataURL();
-            } else {
-              console.log('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
+  importDatabaseFile(dbFileName: string, legacy: boolean): Promise<Artikel[]> {
+    return new Promise((resolve, reject) => {
+      const nativeImage = this._electronService.remote.require('electron').nativeImage;
+      const Datastore = this._electronService.remote.require('nedb'),
+        db: Datastore = new Datastore({
+          filename: dbFileName,
+          autoload: true
+        });
+      this._ngZone.run(() => {
+        db.find<Artikel>({}, (e, docs) => {
+          if (!e) {
+            for (let importedArtikel of docs) {
+              // TODO: auslagern da Duplikat in inventarservice, imagepath in imagedataurl umbenennen
+              if (legacy) {
+                let image = nativeImage.createFromPath(importedArtikel.imagePath);
+                if (!image.isEmpty()) {
+                  let resizedImage = image.resize({ width: 400 });
+                  importedArtikel.imagePath = resizedImage.toDataURL();
+                } else {
+                  reject('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
+                  console.log('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
+                }
+              }
+              this.inventarDB.insert(importedArtikel);
+              console.log('inserted artikel: ' + importedArtikel);
+              resolve(this.loadAll());
             }
+          } else {
+            reject(e);
+            console.error('unable to load database', e);
           }
-          this.inventarDB.insert(importedArtikel);
-          console.log('inserted artikel: ' + importedArtikel);
-        }
-      }
+        });
+      });
     });
   }
   exportDatabaseFile(toFileName: string): void {
@@ -83,15 +92,22 @@ export class DatabaseService {
     });
   }
 
-  loadAll(): void {
-    this._ngZone.run(() => {
-      this.inventarDB.find<Artikel>({}, (e, docs) => {
-        if (!e) {
-          this.artikelStore.liste = docs;
-          this._artikelSubject.next(this.artikelStore.liste);
-          console.log('dbservice subject', this._artikelSubject);
-          console.log('dbservice items', this.artikelObservable);
-        }
+  loadAll(): Promise<Artikel[]> {
+    return new Promise((resolve, reject) => {
+      this._ngZone.run(() => {
+        this.inventarDB.find<Artikel>({}, (e, docs) => {
+          if (!e) {
+            this.artikelStore.liste = docs;
+            this._artikelSubject.next(this.artikelStore.liste);
+            console.log('dbservice subject', this._artikelSubject);
+            console.log('dbservice items', this.artikelObservable);
+            resolve(docs);
+          }
+          else {
+            reject(e);
+            console.log('Failed to load artikelliste');
+          }
+        });
       });
     });
   }

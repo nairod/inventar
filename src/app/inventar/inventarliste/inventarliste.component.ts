@@ -11,11 +11,11 @@ import { DatabaseService } from '../services/database.service';
 import { InventarService } from '../services/inventar.service';
 
 @Component({
-  templateUrl: './inventardruck.component.html',
+  templateUrl: './inventarliste.component.html',
 })
 
 
-export class InventardruckComponent implements OnInit {
+export class InventarlisteComponent implements OnInit {
   columns: any = [
     { name: 'imagePath' },
     { prop: 'name' },

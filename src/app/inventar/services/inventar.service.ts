@@ -7,7 +7,7 @@ import { Artikel } from '../models/artikel';
 export class InventarService {
   private _kategorien: string[] =
   ['Anhänger', 'Perlenkette', 'Edelsteine ', 'Eheringe', 'Kinderketteli',
-    'Ring', 'Ohrschmuck', 'Collier', 'Armkette'];
+    'Ring', 'Ohrschmuck', 'Collier', 'Armkette', 'importierte Fotos'];
 
   private printSettings: Electron.PrintToPDFOptions =
   {
@@ -55,23 +55,28 @@ export class InventarService {
     return this.createImage(photoPath).toDataURL();
   }
 
-  public loadPhotos(): void {
-    const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
+  public loadPhotos(): Promise<String[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
+        const sourcePath = this.getFolder();
+        const photos_on_disk: string[] = recursiveReadSync(sourcePath);
 
-    const sourcePath = this.getFolder();
-    const photos_on_disk: string[] = recursiveReadSync(sourcePath);
-
-    for (const photo of photos_on_disk) {
-
-      const resizedImage = this.createImage(photo);
-
-      const artikel: Artikel = new Artikel(undefined, undefined, undefined, 0, 0, resizedImage.toDataURL());
-
-      this._databaseService.insert(artikel);
-      console.log(photo + ' inserted');
-    }
-    this._databaseService.loadAll();
+        for (const photo of photos_on_disk) {
+          const resizedImage = this.createImage(photo);
+          const artikel: Artikel = new Artikel(undefined, undefined, "importierte Fotos", 0, 0, resizedImage.toDataURL());
+          this._databaseService.insert(artikel);
+          console.log(photo + ' inserted');
+        }
+        resolve(photos_on_disk);
+      }
+      catch (e) {
+        reject(e);
+      }
+    });
   }
+
+
 
   public importDatabase(): void {
     const file = this.getFile();
@@ -101,5 +106,4 @@ export class InventarService {
       });
     });
   }
-
 }

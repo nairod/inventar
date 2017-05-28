@@ -12,18 +12,24 @@ import { CommonModule } from '@angular/common';
 
 export class AppComponent {
   workInProgress = false;
+  progressName = '';
   constructor(private _inventarService: InventarService, private _dbService: DatabaseService) { }
 
   public loadPhotos() {
     this.workInProgress = true;
-    this._inventarService.loadPhotos().then(() => this.workInProgress = false);
+    this.progressName = 'Die Fotos werden importiert'
+    this._inventarService.loadPhotos().then(() => this.clearProgress());
   }
 
   public importDatabase() {
-    this._inventarService.importDatabase();
+    this.workInProgress = true;
+    this.progressName = 'Die Datenbank wird importiert'
+    this._inventarService.importDatabase().then(() => this.clearProgress());
   }
   public exportDatabase() {
-    this._inventarService.exportDatabase();
+    this.workInProgress = true;
+    this.progressName = 'Die Datenbank wird exportiert'
+    this._inventarService.exportDatabase().then(() => this.clearProgress());
   }
 
   public deleteAll() {
@@ -31,6 +37,17 @@ export class AppComponent {
   }
 
   public print() {
-    this._inventarService.print();
+    this.workInProgress = true;
+    this.progressName = 'PDF wird generiert'
+    this._inventarService.print().then((pdf) => {
+      this.progressName = pdf;
+      this.workInProgress = false;
+      setTimeout(() => this.progressName = '', 5000);
+    }
+    );
   }
+
+  private clearProgress() {
+    this.workInProgress = false; this.progressName = ''
+  };
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { DatabaseService } from './database.service';
 import { Artikel } from '../models/artikel';
+import * as Datastore from 'nedb';
 
 @Injectable()
 export class InventarService {
@@ -76,33 +77,33 @@ export class InventarService {
     });
   }
 
-
-
-  public importDatabase(): void {
+  public importDatabase(): Promise<Artikel[]> {
     const file = this.getFile();
     console.log('import: ' + file);
-    this._databaseService.importDatabaseFile(file, false);
+    return this._databaseService.importDatabaseFile(file, false);
   }
 
-  public exportDatabase(): void {
+  public exportDatabase(): Promise<Datastore> {
     const file = this.getFile();
     console.log('export: ' + file);
-    this._databaseService.exportDatabaseFile(file);
+    return this._databaseService.exportDatabaseFile(file);
   }
 
-  public print() {
-    const file: string = this.getFile();
-    const fs = this._electronService.remote.require('fs');
-    this._electronService.remote.webContents.getFocusedWebContents().printToPDF(this.printSettings, (err, data) => {
-      if (err) {
-        // dialog.showErrorBox('Error', err);
-        return;
-      }
-      fs.writeFile(file, data, function (err1) {
-        if (err1) {
+  public print(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const file: string = this.getFile();
+      const fs = this._electronService.remote.require('fs');
+      this._electronService.remote.webContents.getFocusedWebContents().printToPDF(this.printSettings, (err, data) => {
+        if (err) {
           // dialog.showErrorBox('Error', err);
-          return;
+          reject(err.message);
         }
+        fs.writeFile(file, data, (err1) => {
+          if (err1) {
+            reject("error while creating file");
+          }
+        });
+        resolve("PDF " + file + " erfolgreich erstellt.");
       });
     });
   }

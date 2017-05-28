@@ -66,8 +66,8 @@ export class DatabaseService {
               }
               this.inventarDB.insert(importedArtikel);
               console.log('inserted artikel: ' + importedArtikel);
-              resolve(this.loadAll());
             }
+            resolve(this.loadAll());
           } else {
             reject(e);
             console.error('unable to load database', e);
@@ -76,18 +76,27 @@ export class DatabaseService {
       });
     });
   }
-  exportDatabaseFile(toFileName: string): void {
-    const Datastore = this._electronService.remote.require('nedb'),
-      exportDB: Datastore = new Datastore({
-        filename: toFileName,
-        autoload: true
-      });
-    this.inventarDB.find<Artikel>({}, (e, docs) => {
-      if (!e) {
-        for (let artikel of docs) {
-          exportDB.insert(artikel);
-          console.log('exported artikel: ' + artikel);
-        }
+  exportDatabaseFile(toFileName: string): Promise<Datastore> {
+    return new Promise((resolve, reject) => {
+      try {
+        const Datastore = this._electronService.remote.require('nedb'),
+          exportDB: Datastore = new Datastore({
+            filename: toFileName,
+            autoload: true
+          });
+        this.inventarDB.find<Artikel>({}, (e, docs) => {
+          if (!e) {
+            for (let artikel of docs) {
+              exportDB.insert(artikel);
+              console.log('exported artikel: ' + artikel);
+            }
+            resolve(exportDB);
+          } else {
+            reject(e);
+          }
+        });
+      } catch (e) {
+        reject(e);
       }
     });
   }

@@ -1,9 +1,10 @@
 <md-toolbar color="primary" class="fixed-top-nav">
   <span>Inventar Glanzvoll</span>
 
-
-  <md-progress-bar *ngIf="workInProgress" style="margin: 1em;" color="accent" mode="indeterminate"></md-progress-bar>
-
+  <div *ngIf="workInProgress" style="margin: 1em; width:100%">
+    <p style="font-size: small; margin-bottom: 1em;">{{progressName}}</p>
+    <md-progress-bar color="accent" mode="indeterminate"></md-progress-bar>
+  </div>
 
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>

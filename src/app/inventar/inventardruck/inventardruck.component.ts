@@ -47,13 +47,12 @@ export class InventardruckComponent implements OnInit {
           console.log(group[0].kategorie);
         })
         .value();
-      this.loaded = liste.length > 0;
       this.tempKategorien = [...this.kategorien];
     });
   }
 
   ngOnInit() {
-    this._dbService.openDatabase().loadAll();
+    this._dbService.openDatabase().loadAll().then(() => this.loaded = true);
   }
 
   kategorieChange() {
@@ -66,6 +65,9 @@ export class InventardruckComponent implements OnInit {
     this.kategorien = temp;
   }
   reload() {
-    this._dbService.loadAll();
+    this.loaded = false;
+    this._dbService.loadAll().then(() => {
+      this.loaded = true;
+    });
   }
 }

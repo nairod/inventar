@@ -23,7 +23,8 @@ import { CustomReuseStrategy } from './reuse-strategy';
     FormsModule,
     MaterialModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: CustomReuseStrategy }],
   bootstrap: [AppComponent]

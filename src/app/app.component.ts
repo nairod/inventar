@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InventarService } from './inventar/services/inventar.service';
 import { DatabaseService } from './inventar/services/database.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,14 @@ import { DatabaseService } from './inventar/services/database.service';
   styleUrls: ['./app.component.css'],
   providers: [InventarService, DatabaseService]
 })
-export class AppComponent {
 
+export class AppComponent {
+  workInProgress = false;
   constructor(private _inventarService: InventarService, private _dbService: DatabaseService) { }
 
   public loadPhotos() {
-    this._inventarService.loadPhotos();
+    this.workInProgress = true;
+    this._inventarService.loadPhotos().then(() => this.workInProgress = false);
   }
 
   public importDatabase() {

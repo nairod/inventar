@@ -1,6 +1,10 @@
 <md-toolbar color="primary" class="fixed-top-nav">
   <span>Inventar Glanzvoll</span>
 
+
+  <md-progress-bar *ngIf="workInProgress" style="margin: 1em;" color="accent" mode="indeterminate"></md-progress-bar>
+
+
   <!-- This fills the remaining space of the current row -->
   <span class="fill-remaining-space"></span>
   <button md-icon-button [routerLink]="'inventarliste/new'"><md-icon class="noPrint">add_box</md-icon></button>

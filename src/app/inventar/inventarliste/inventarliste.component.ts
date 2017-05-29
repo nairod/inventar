@@ -30,6 +30,9 @@ export class InventarlisteComponent implements OnInit {
   inventarliste: Observable<Artikel[]>;
   loaded = false;
   selectedValue: string[] = [];
+  totalEp: number;
+  totalVp: number;
+  totalCount: number;
 
   constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
 
@@ -47,6 +50,10 @@ export class InventarlisteComponent implements OnInit {
           console.log(group[0].kategorie);
         })
         .value();
+
+      this.totalCount = liste.length;
+      this.totalEp = _.sumBy(liste, a => a.einstandspreis);
+      this.totalVp = _.sumBy(liste, a => a.verkaufspreis);
       this.tempKategorien = [...this.kategorien];
     });
   }
@@ -62,8 +69,26 @@ export class InventarlisteComponent implements OnInit {
         return this.selectedValue.indexOf(k.name) > -1;
       }
     );
+
+    let totalCount = 0, totalEp = 0, totalVp = 0;
+    temp.forEach(t => {
+      totalCount += t.totalCount;
+      totalEp += t.totalEP;
+      totalVp += t.totalVP;
+    });
+
+    this.totalCount = totalCount;
+    this.totalEp = totalEp;
+    this.totalVp = totalVp;
     this.kategorien = temp;
   }
+
+  calculateGrandTotals(artikelliste: Artikel[]) {
+    this.totalCount = artikelliste.length;
+    this.totalEp = _.sumBy(artikelliste, a => a.einstandspreis);
+    this.totalVp = _.sumBy(artikelliste, a => a.verkaufspreis);
+  }
+
   reload() {
     this.loaded = false;
     this._dbService.loadAll().then(() => {

@@ -6,7 +6,7 @@
       </md-option>
     </md-select>
   </form>
-  <div class="kategorie" *ngFor="let kategorie of kategorien">
+  <div class="gruppe" *ngFor="let kategorie of kategorien">
     <figure>
       <h2>
         {{kategorie.name}}
@@ -20,11 +20,33 @@
         </figure>
       </div>
     </figure>
-    <h3>
-      Total EP: {{kategorie.totalEP}} / Total VP: {{kategorie.totalVP}}
-    </h3>
+    <h3> Total EP: {{kategorie.totalEP}} / Total VP: {{kategorie.totalVP}} / Anzahl: {{kategorie.totalCount}} </h3>
   </div>
+  <table class="gruppe rekap">
+    <caption>
+      Gesamttotal
+    </caption>
+    <tr>
+      <th>Kategorie</th>
+      <th>Einstandspreis</th>
+      <th>Verkaufspreis</th>
+      <th>Anzahl</th>
+    </tr>
+    <tr *ngFor="let kategorie of kategorien">
+      <td>{{kategorie.name}}</td>
+      <td>{{kategorie.totalEP}}</td>
+      <td>{{kategorie.totalVP}}</td>
+      <td>{{kategorie.totalCount}}</td>
+    </tr>
+    <tr>
+      <td>Alle Kategorien</td>
+      <td>{{totalEp}}</td>
+      <td>{{totalVp}}</td>
+      <td>{{totalCount}}</td>
+    </tr>
+  </table>
 </div>
+
 
 <md-card *ngIf="!loaded">
   <md-card-subtitle>

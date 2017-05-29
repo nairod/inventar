@@ -38,12 +38,23 @@ figure.einzel {
   margin: 0.5%;
 }
 
-.kategorie {
+.gruppe {
   border-style: solid;
   padding: 1%;
   border-color: gainsboro;
   margin-bottom: 2em;
   overflow: auto;
+  color: gainsboro;
+}
+
+.rekap {
+  padding: 2em;
+  text-align: left;
+  width: 100%;
+}
+
+caption {
+  text-align: left;
 }
 
 body {

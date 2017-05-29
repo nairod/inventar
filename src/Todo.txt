@@ -1,6 +1,4 @@
 bug: nur bild ändern macht nicht dirty
-bug: beim abbrechen des file dialogs wird progress nicht gelöscht
-anzahl, gesamttotal
 kategorie dynamisch und aus ordnernamen automatisch erstellen
 next in category?
 chunksize variabel für printing

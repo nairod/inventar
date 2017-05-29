@@ -59,7 +59,7 @@ export class InventarService {
   public loadPhotos(): Promise<String[]> {
     return new Promise((resolve, reject) => {
       try {
-        const recursiveReadSync = this._electronService.remote.require('recursive-readdir-sync');
+        const recursiveReadSync = require('recursive-readdir-sync');
         const sourcePath = this.getFolder();
         const photos_on_disk: string[] = recursiveReadSync(sourcePath);
 

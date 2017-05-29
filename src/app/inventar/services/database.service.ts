@@ -44,7 +44,7 @@ export class DatabaseService {
   importDatabaseFile(dbFileName: string, legacy: boolean): Promise<Artikel[]> {
     return new Promise((resolve, reject) => {
       const nativeImage = this._electronService.remote.require('electron').nativeImage;
-      const Datastore = this._electronService.remote.require('nedb'),
+      const Datastore = require('nedb'),
         db: Datastore = new Datastore({
           filename: dbFileName,
           autoload: true
@@ -79,7 +79,7 @@ export class DatabaseService {
   exportDatabaseFile(toFileName: string): Promise<Datastore> {
     return new Promise((resolve, reject) => {
       try {
-        const Datastore = this._electronService.remote.require('nedb'),
+        const Datastore = require('nedb'),
           exportDB: Datastore = new Datastore({
             filename: toFileName,
             autoload: true

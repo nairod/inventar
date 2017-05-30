@@ -2,7 +2,7 @@
   <form name="kategorieSearch" class="searchBox">
     <md-select name="kategorieCombo" [(ngModel)]="selectedValue" (change)="kategorieChange()" color="accent" multiple="true"
       style="width: 100%" placeholder="Kategorie" floatPlaceholder="never">
-      <md-option *ngFor="let kategorie of kategorieComboListe" [value]="kategorie.name">{{ kategorie.name }}
+      <md-option *ngFor="let kategorie of kategorieComboListe" [value]="kategorie">{{ kategorie }}
       </md-option>
     </md-select>
   </form>

@@ -25,7 +25,7 @@ export class InventarlisteComponent implements OnInit {
   ];
 
   kategorien: Kategorie[] = [];
-  kategorieComboListe: Kategorie[] = [];
+  kategorieComboListe: string[] = [];
   tempKategorien: Kategorie[] = [];
   inventarliste: Observable<Artikel[]>;
   loaded = false;
@@ -37,23 +37,16 @@ export class InventarlisteComponent implements OnInit {
   constructor(private _dbService: DatabaseService, private _inventarService: InventarService) {
 
     this.inventarliste = this._dbService.artikelObservable;
-    this._dbService.artikelObservable.subscribe(liste => {
-      this.kategorien = [];
+    this._dbService.kategorieObservable.subscribe(liste => {
+      this.kategorien = liste;
       this.kategorieComboListe = [];
       _(liste).chain()
-        .groupBy(art => art.kategorie)
-        .forEach((group: Artikel[]) => {
-          const kat = new Kategorie(group[0].kategorie, group);
-          this.kategorien.push(kat);
-          this.kategorieComboListe.push(kat);
+        .forEach((kat: Kategorie) => {
+          this.kategorieComboListe.push(kat.name);
           this.selectedValue.push(kat.name);
-          console.log(group[0].kategorie);
         })
         .value();
-
-      this.totalCount = liste.length;
-      this.totalEp = _.sumBy(liste, a => a.einstandspreis);
-      this.totalVp = _.sumBy(liste, a => a.verkaufspreis);
+      this.calculateGrandTotals(this.kategorien);
       this.tempKategorien = [...this.kategorien];
     });
   }
@@ -70,8 +63,13 @@ export class InventarlisteComponent implements OnInit {
       }
     );
 
+    this.calculateGrandTotals(temp);
+    this.kategorien = temp;
+  }
+
+  calculateGrandTotals(kategorien: Kategorie[]) {
     let totalCount = 0, totalEp = 0, totalVp = 0;
-    temp.forEach(t => {
+    kategorien.forEach(t => {
       totalCount += t.totalCount;
       totalEp += t.totalEP;
       totalVp += t.totalVP;
@@ -80,14 +78,9 @@ export class InventarlisteComponent implements OnInit {
     this.totalCount = totalCount;
     this.totalEp = totalEp;
     this.totalVp = totalVp;
-    this.kategorien = temp;
+
   }
 
-  calculateGrandTotals(artikelliste: Artikel[]) {
-    this.totalCount = artikelliste.length;
-    this.totalEp = _.sumBy(artikelliste, a => a.einstandspreis);
-    this.totalVp = _.sumBy(artikelliste, a => a.verkaufspreis);
-  }
 
   reload() {
     this.loaded = false;

@@ -1,9 +1,10 @@
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { Injectable, NgZone } from '@angular/core';
 import * as Datastore from 'nedb';
-
+import * as _ from 'lodash';
 import { ElectronService } from 'ngx-electron';
 import { Artikel } from '../models/artikel';
+import { Kategorie } from '../models/kategorie';
 
 
 @Injectable()
@@ -12,6 +13,12 @@ export class DatabaseService {
   private _artikelSubject: BehaviorSubject<Artikel[]>;
   private artikelStore: {
     liste: Artikel[];
+  };
+
+  kategorieObservable: Observable<Kategorie[]>;
+  private _kategorieSubject: BehaviorSubject<Kategorie[]>;
+  private kategorieStore: {
+    liste: Kategorie[];
   };
   private inventarDB: Datastore;
   private dbPath: string;
@@ -22,6 +29,26 @@ export class DatabaseService {
     this.artikelObservable = this._artikelSubject.asObservable();
     console.log('BehaviorSubject', this._artikelSubject);
     console.log('Observable', this.artikelObservable);
+
+    this.kategorieStore = { liste: [] };
+    this._kategorieSubject = <BehaviorSubject<Kategorie[]>>new BehaviorSubject([]);
+    this.kategorieObservable = this._kategorieSubject.asObservable();
+    console.log('BehaviorSubject', this._kategorieSubject);
+    console.log('Observable', this.kategorieObservable);
+
+    this.artikelObservable.subscribe(liste => {
+      const tmpKategorien = [];
+      _(liste).chain()
+        .groupBy(art => art.kategorie)
+        .forEach((group: Artikel[]) => {
+          const kat = new Kategorie(group[0].kategorie, group);
+          tmpKategorien.push(kat);
+          console.log(group[0].kategorie);
+        })
+        .value();
+      this.kategorieStore.liste = tmpKategorien;
+      this._kategorieSubject.next(this.kategorieStore.liste);
+    });
   }
 
   openDatabase(): DatabaseService {
@@ -127,8 +154,6 @@ export class DatabaseService {
         if (!e) {
           this.artikelStore.liste = docs;
           this._artikelSubject.next(this.artikelStore.liste);
-          console.log('dbservice subject', this._artikelSubject);
-          console.log('dbservice items', this.artikelObservable);
         }
       });
     });
@@ -168,6 +193,7 @@ export class DatabaseService {
           console.log('error storing ', artikel.name);
         } else {
           console.log('updated ', artikel.name);
+          this._artikelSubject.next(this.artikelStore.liste);
         }
       });
   }

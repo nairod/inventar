@@ -44,12 +44,12 @@ export class ArtikelComponent implements OnInit {
   }
 
   next() {
-    this.artikel = this.dbService.nextFor(this.artikel);
+    this.artikel = this.dbService.nextInKategorieFor(this.artikel);
     return this.artikel;
   }
 
   previous() {
-    this.artikel = this.dbService.previousFor(this.artikel);
+    this.artikel = this.dbService.previousInKategorieFor(this.artikel);
     return this.artikel;
   }
 

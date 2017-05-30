@@ -237,6 +237,50 @@ export class DatabaseService {
     return this.artikelStore.liste[ix];
   }
 
+  public nextInKategorieFor(artikel: Artikel) {
+    const kategorie = this.kategorieStore.liste.find(kategorie => kategorie.name === artikel.kategorie);
+    const artikelInKategorie = kategorie.artikelliste;
+    let ix = artikelInKategorie.findIndex(arti => arti._id === artikel._id);
+    if (ix === (artikelInKategorie.length - 1)) {
+      return this.findNextKategorie(kategorie).artikelliste[0];
+    } else {
+      ix++;
+    }
+    return artikelInKategorie[ix];
+  }
+
+  public previousInKategorieFor(artikel: Artikel) {
+    const kategorie = this.kategorieStore.liste.find(kategorie => kategorie.name === artikel.kategorie);
+    const artikelInKategorie = kategorie.artikelliste;
+    let ix = artikelInKategorie.findIndex(arti => arti._id === artikel._id);
+    if (ix === 0) {
+      return _(this.findPreviousKategorie(kategorie).artikelliste).last();
+    } else {
+      ix--;
+    }
+    return artikelInKategorie[ix];
+  }
+
+  private findNextKategorie(kategorie: Kategorie) {
+    let ix = this.kategorieStore.liste.findIndex(kat => kat.name === kategorie.name);
+    if (ix === (this.kategorieStore.liste.length - 1)) {
+      ix = 0;
+    } else {
+      ix++;
+    }
+    return this.kategorieStore.liste[ix];
+  }
+
+  public findPreviousKategorie(kategorie: Kategorie) {
+    let ix = this.kategorieStore.liste.findIndex(kat => kat.name === kategorie.name);
+    if (ix === 0) {
+      ix = (this.kategorieStore.liste.length - 1);
+    } else {
+      ix--;
+    }
+    return this.kategorieStore.liste[ix];
+  }
+
   public previousFor(artikel: Artikel) {
     let ix = this.artikelStore.liste.findIndex(arti => arti._id === artikel._id);
     if (ix === 0) {

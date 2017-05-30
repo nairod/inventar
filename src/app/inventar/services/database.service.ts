@@ -193,7 +193,6 @@ export class DatabaseService {
           console.log('error storing ', artikel.name);
         } else {
           console.log('updated ', artikel.name);
-          this._artikelSubject.next(this.artikelStore.liste);
         }
       });
   }

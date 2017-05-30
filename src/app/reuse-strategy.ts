@@ -80,9 +80,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
       // nur wenn der Artikel geändert wurde muss die Liste neu geladen werden
       let reloadRequired: boolean = route.queryParams.hasOwnProperty('reload') && this.compareObjects(route.queryParams, { reload: 'true' });
-      let isNew: boolean = route.routeConfig.path === 'new';
+      let artikelDetail: boolean = route.routeConfig.path === 'new' || route.routeConfig.path === ':id';
       console.log('deciding to attach...', route, 'does it match?', this.storedRoutes[route.routeConfig.path].snapshot, 'return: ', paramsMatch && queryParamsMatch);
-      return paramsMatch && queryParamsMatch && !reloadRequired && !isNew;
+      return paramsMatch && queryParamsMatch && !reloadRequired && !artikelDetail;
     } else {
       return false;
     }

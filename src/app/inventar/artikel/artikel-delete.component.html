@@ -1,0 +1,8 @@
+<md-card>
+    <h1 md-dialog-title>Artikel löschen</h1>
+    <div md-dialog-content>Soll der Artikel endgültig gelöscht werden?<br><br></div>
+    <div md-dialog-actions>
+        <button md-button (click)="dialogRef.close('delete')">Artikel löschen</button>
+        <button md-button (click)="dialogRef.close('keep')">Artikel behalten</button>
+    </div>
+</md-card>

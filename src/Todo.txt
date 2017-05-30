@@ -1,4 +1,3 @@
-next in category?
 kategorie dynamisch und aus ordnernamen automatisch erstellen
 chunksize variabel für printing
 error visualisierung

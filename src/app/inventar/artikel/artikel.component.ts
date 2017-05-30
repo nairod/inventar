@@ -5,8 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { InventarService } from '../services/inventar.service';
 import { Artikel } from '../models/artikel';
 import { DatabaseService } from '../services/database.service';
-
+import { ArtikelDeleteDialog } from './artikel-delete.component';
 import { MaterialModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -25,6 +27,7 @@ export class ArtikelComponent implements OnInit {
     } else {
       this.dbService.insert(this.artikel);
     }
+    this.showNotification('Artikel gespeichert');
     this.artikelChanged = true;
   }
 
@@ -32,7 +35,10 @@ export class ArtikelComponent implements OnInit {
     private route: ActivatedRoute,
     private dbService: DatabaseService,
     private inventarService: InventarService,
-    private location: Location) {
+    private location: Location,
+    private snackBar: MdSnackBar,
+    private dialog: MdDialog
+  ) {
     const id: string = this.route.snapshot.params['id'];
     if (id !== undefined) {
       this.dbService.getArtikel(id).then(artikel => this.artikel = artikel);
@@ -58,8 +64,14 @@ export class ArtikelComponent implements OnInit {
   }
 
   delete() {
-    this.dbService.delete(this.artikel._id);
-    this.next();
+    let dialogRef = this.dialog.open(ArtikelDeleteDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      if ('delete' === result) {
+        this.dbService.delete(this.artikel._id);
+        this.showNotification('Artikel gelöscht');
+        this.next();
+      }
+    });
   }
 
   addPhoto() {
@@ -68,6 +80,10 @@ export class ArtikelComponent implements OnInit {
 
   artikelChangedQueryParam(): any {
     return { reload: this.artikelChanged };
+  }
+
+  private showNotification(message: string) {
+    this.snackBar.open(message, null, { duration: 2000 });
   }
 }
 

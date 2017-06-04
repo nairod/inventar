@@ -69,32 +69,21 @@ export class DatabaseService {
   }
 
   importDatabaseFile(dbFileName: string, legacy: boolean): Promise<Artikel[]> {
-    return new Promise((resolve, reject) => {
-      const nativeImage = this._electronService.remote.require('electron').nativeImage;
-      const Datastore = require('nedb'),
-        db: Datastore = new Datastore({
-          filename: dbFileName,
-          autoload: true
-        });
-      this._ngZone.run(() => {
+    const nativeImage = this._electronService.remote.require('electron').nativeImage;
+    const Datastore = require('nedb'),
+      db: Datastore = new Datastore({
+        filename: dbFileName,
+        autoload: true
+      });
+    return this._ngZone.run(() => {
+      return new Promise((resolve, reject) => {
         db.find<Artikel>({}, (e, docs) => {
           if (!e) {
             for (let importedArtikel of docs) {
-              // TODO: auslagern da Duplikat in inventarservice, imagepath in imagedataurl umbenennen
-              if (legacy) {
-                let image = nativeImage.createFromPath(importedArtikel.imagePath);
-                if (!image.isEmpty()) {
-                  let resizedImage = image.resize({ width: 400 });
-                  importedArtikel.imagePath = resizedImage.toDataURL();
-                } else {
-                  reject('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
-                  console.log('bild konnte nicht geladen werden: ' + importedArtikel.imagePath);
-                }
-              }
               this.inventarDB.insert(importedArtikel);
               console.log('inserted artikel: ' + importedArtikel);
             }
-            resolve(this.loadAll());
+            this.loadAll().then((liste) => resolve(liste));
           } else {
             reject(e);
             console.error('unable to load database', e);
@@ -103,6 +92,7 @@ export class DatabaseService {
       });
     });
   }
+
   exportDatabaseFile(toFileName: string): Promise<Datastore> {
     return new Promise((resolve, reject) => {
       try {

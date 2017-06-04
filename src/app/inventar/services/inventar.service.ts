@@ -3,13 +3,11 @@ import { ElectronService } from 'ngx-electron';
 import { DatabaseService } from './database.service';
 import { Artikel } from '../models/artikel';
 import * as Datastore from 'nedb';
+import * as Path from 'path';
+
 
 @Injectable()
 export class InventarService {
-  private _kategorien: string[] =
-  ['Anhänger', 'Perlenkette', 'Edelsteine ', 'Eheringe', 'Kinderketteli',
-    'Ring', 'Ohrschmuck', 'Collier', 'Armkette', 'importierte Fotos'];
-
   private printSettings: Electron.PrintToPDFOptions =
   {
     landscape: false,
@@ -20,13 +18,6 @@ export class InventarService {
   };
 
   constructor(private _databaseService: DatabaseService, private _electronService: ElectronService) { }
-
-
-  get kategorien(): string[] {
-    return this._kategorien;
-  }
-
-
   private getFolder(): string[] {
     return this._electronService.remote.dialog.showOpenDialog({
       title: 'Ordner auswählen',
@@ -62,18 +53,18 @@ export class InventarService {
         const recursiveReadSync = require('recursive-readdir-sync');
         const sourcePath = this.getFolder();
         if (sourcePath !== undefined) {
-          const photos_on_disk: string[] = recursiveReadSync(sourcePath);
+          const photos_on_disk: string[] = recursiveReadSync(sourcePath[0]);
 
           for (const photo of photos_on_disk) {
             const resizedImage = this.createImage(photo);
-            const artikel: Artikel = new Artikel(undefined, undefined, "importierte Fotos", 0, 0, resizedImage.toDataURL());
+            const artikel: Artikel = new Artikel(undefined, undefined, Path.basename(Path.dirname(photo)), 0, 0, resizedImage.toDataURL());
             this._databaseService.insert(artikel);
             console.log(photo + ' inserted');
           }
           resolve(photos_on_disk);
         }
         else {
-          resolve([]);
+          reject('Es wurde kein Ordner ausgewählt');
         }
       }
       catch (e) {
@@ -88,7 +79,7 @@ export class InventarService {
       console.log('import: ' + file);
       return this._databaseService.importDatabaseFile(file[0], false);
     } else {
-      return Promise.resolve(new Array<Artikel>());
+      return Promise.reject('Es wurde kein File ausgewählt.');
     }
   }
 
@@ -102,10 +93,10 @@ export class InventarService {
           resolve(file[0]);
         }
         catch (e) {
-          resolve("Es ist ein unerwarteter Fehler aufgetreten" + e);
+          reject("Es ist ein unerwarteter Fehler aufgetreten: " + e);
         }
       }
-      resolve('');
+      reject('Es wurde kein File ausgewählt.');
     });
   }
 
@@ -119,12 +110,11 @@ export class InventarService {
       this._electronService.remote.webContents.getFocusedWebContents().printToPDF(this.printSettings,
         (err, data) => {
           if (err) {
-            // dialog.showErrorBox('Error', err);
             reject(err.message);
           }
           fs.writeFile(file[0], data, (err1) => {
             if (err1) {
-              reject("error while creating file");
+              reject("error while creating file. " + err1);
             }
           });
           resolve("PDF " + file + " erfolgreich erstellt.");

@@ -26,7 +26,7 @@ export class AppComponent {
       })
       .catch((e) => {
         this.clearProgress();
-        this.snackBar.open('Die Fotos konnten nicht importiert werden.' + e, 'FEHLER!', { duration: 3000 });
+        this.snackBar.open('Die Fotos konnten nicht importiert werden. ' + e, 'FEHLER!', { duration: 3000 });
       });
   }
 
@@ -38,9 +38,9 @@ export class AppComponent {
         this.clearProgress();
         this.snackBar.open('Die Datenbank wurde erfolgreich importiert.', 'OK', { duration: 2000 });
       })
-      .catch(() => {
+      .catch((e) => {
         this.clearProgress();
-        this.snackBar.open('Die Datenbank konnte nicht importiert werden.', 'FEHLER!', { duration: 3000 });
+        this.snackBar.open('Die Datenbank konnte nicht importiert werden. ' + e, 'FEHLER!', { duration: 3000 });
       });
 
   }
@@ -52,9 +52,9 @@ export class AppComponent {
         this.clearProgress();
         this.snackBar.open('Die Datenbank wurde erfolgreich exportiert.', 'OK', { duration: 2000 });
       })
-      .catch(() => {
+      .catch((e) => {
         this.clearProgress();
-        this.snackBar.open('Die Datenbank konnte nicht exportiert werden.', 'FEHLER!', { duration: 3000 });
+        this.snackBar.open('Die Datenbank konnte nicht exportiert werden. ' + e, 'FEHLER!', { duration: 3000 });
       });
   }
 

@@ -4,12 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 
 import { InventarService } from '../services/inventar.service';
 import { Artikel } from '../models/artikel';
+import { Kategorie } from '../models/kategorie';
 import { DatabaseService } from '../services/database.service';
 import { ArtikelDeleteDialog } from './artikel-delete.component';
 import { MaterialModule } from '@angular/material';
 import { MdSnackBar } from '@angular/material';
 import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: './artikel.component.html',
@@ -46,7 +48,14 @@ export class ArtikelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.kategorien = this.inventarService.kategorien;
+    this.dbService.kategorieObservable.subscribe(liste => {
+      this.kategorien = [];
+      _(liste).chain()
+        .forEach((kat: Kategorie) => {
+          this.kategorien.push(kat.name);
+        })
+        .value();
+    });
   }
 
   next() {

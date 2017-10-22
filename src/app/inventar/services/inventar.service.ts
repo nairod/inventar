@@ -85,12 +85,13 @@ export class InventarService {
 
   public exportDatabase(): Promise<string> {
     return new Promise((resolve, reject) => {
-      const file = this.getFile();
+      const file = this.getFolder();
       if (file != null) {
         try {
-          this._databaseService.exportDatabaseFile(file[0]);
-          console.log('export: ' + file[0]);
-          resolve(file[0]);
+          const fileName = file[0] + '/inventar.json';
+          this._databaseService.exportDatabaseFile(fileName);
+          console.log('export: ' + fileName);
+          resolve(fileName);
         }
         catch (e) {
           reject("Es ist ein unerwarteter Fehler aufgetreten: " + e);
@@ -102,22 +103,23 @@ export class InventarService {
 
   public print(): Promise<string> {
     return new Promise((resolve, reject) => {
-      const file: string[] = this.getFile();
+      const file: string[] = this.getFolder();
       if (file == null) {
         resolve('Ungueltige Eingabe');
       }
+      const fileName = file[0] + '/inventar.pdf';
       const fs = this._electronService.remote.require('fs');
-      this._electronService.remote.webContents.getFocusedWebContents().printToPDF(this.printSettings,
+      this._electronService.remote.webContents.getAllWebContents().pop().printToPDF(this.printSettings,
         (err, data) => {
           if (err) {
             reject(err.message);
           }
-          fs.writeFile(file[0], data, (err1) => {
+          fs.writeFile(fileName, data, (err1) => {
             if (err1) {
               reject("error while creating file. " + err1);
             }
           });
-          resolve("PDF " + file + " erfolgreich erstellt.");
+          resolve("PDF " + fileName + " erfolgreich erstellt.");
         });
     });
   }
